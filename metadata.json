@@ -1,0 +1,6 @@
+{
+  "name": "EuroPalletLiquidation.eu",
+  "description": "Europe's premier online liquidation & clearance outlet shop. Shop brand overstock, electronics, home goods, and tools at up to 80% off retail with fast EU delivery.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
