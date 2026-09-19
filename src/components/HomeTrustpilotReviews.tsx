@@ -202,11 +202,11 @@ export const HomeTrustpilotReviews: React.FC<HomeTrustpilotReviewsProps> = ({
   });
 
   return (
-    <section className="py-12 sm:py-16 bg-slate-950 border-t border-slate-800/80 text-slate-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <section className="py-8 sm:py-16 bg-slate-950 border-t border-slate-800/80 text-slate-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
         
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-slate-800/80 pb-6">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-slate-800/80 pb-5 sm:pb-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold">
               <span className="relative flex h-2 w-2">
@@ -216,7 +216,7 @@ export const HomeTrustpilotReviews: React.FC<HomeTrustpilotReviewsProps> = ({
               <span>TRUSTPILOT VERIFIED COMMUNITY</span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-3">
+            <h2 className="text-xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-3">
               <span>{mockTranslate('trustpilotTitle', language)}</span>
               {newReviewBadge && (
                 <span className="text-xs font-bold font-mono px-2 py-0.5 rounded-full bg-emerald-500 text-slate-950 animate-bounce">

@@ -12,16 +12,16 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
   selectedCategoryId
 }) => {
   return (
-    <section className="py-12 bg-slate-950 border-b border-slate-800">
+    <section className="py-8 sm:py-12 bg-slate-950 border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-5 sm:mb-8 gap-3 sm:gap-4">
           <div>
             <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400 uppercase tracking-wider mb-1">
               <Tag className="w-3.5 h-3.5" />
               <span>Shop by Department</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <h2 className="text-xl sm:text-3xl font-black text-white tracking-tight">
               Explore Liquidation Categories
             </h2>
           </div>
@@ -30,7 +30,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-4">
           {CATEGORIES.map(category => {
             const isSelected = selectedCategoryId === category.id;
 
@@ -38,14 +38,14 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
               <div
                 key={category.id}
                 onClick={() => onSelectCategory(category.id)}
-                className={`group cursor-pointer rounded-2xl p-2 sm:p-2.5 transition-all border flex flex-col ${
+                className={`group cursor-pointer rounded-2xl p-2 sm:p-2.5 transition-all border flex flex-col active:scale-98 ${
                   isSelected
                     ? 'border-emerald-500 ring-2 ring-emerald-500/20 bg-slate-900'
                     : 'border-slate-800/90 hover:border-slate-700 bg-slate-900/60 hover:bg-slate-900 shadow-sm'
                 }`}
               >
                 {/* Clear Image Box without text overlays */}
-                <div className="relative h-32 sm:h-36 w-full rounded-xl overflow-hidden bg-slate-950 border border-slate-800/80">
+                <div className="relative h-28 sm:h-36 w-full rounded-xl overflow-hidden bg-slate-950 border border-slate-800/80">
                   <img
                     src={category.image}
                     alt={category.name}

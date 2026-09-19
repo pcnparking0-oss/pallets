@@ -159,10 +159,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/85 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 animate-in fade-in duration-200">
       <div 
         onClick={(e) => e.stopPropagation()}
-        className="bg-slate-900 border border-slate-700/80 rounded-2xl w-full max-w-3xl max-h-[92vh] overflow-y-auto shadow-2xl flex flex-col divide-y divide-slate-800"
+        className="bg-slate-900 border border-slate-700/80 rounded-t-3xl sm:rounded-2xl w-full max-w-3xl max-h-[94vh] sm:max-h-[92vh] overflow-y-auto shadow-2xl flex flex-col divide-y divide-slate-800 safe-area-bottom"
       >
         {/* Modal Top Bar */}
         <div className="px-5 py-4 flex items-center justify-between bg-slate-950/80 sticky top-0 z-20 backdrop-blur">

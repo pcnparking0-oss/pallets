@@ -16,8 +16,6 @@ import {
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
-  Camera,
-  Sparkles,
   Layers,
   TrendingUp
 } from 'lucide-react';
@@ -67,10 +65,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/85 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 animate-in fade-in duration-200">
       <div 
         onClick={(e) => e.stopPropagation()}
-        className="bg-slate-900 border border-slate-700/80 rounded-2xl w-full max-w-4xl max-h-[92vh] overflow-y-auto shadow-2xl flex flex-col relative divide-y divide-slate-800"
+        className="bg-slate-900 border border-slate-700/80 rounded-t-3xl sm:rounded-2xl w-full max-w-4xl max-h-[94vh] sm:max-h-[92vh] overflow-y-auto shadow-2xl flex flex-col relative divide-y divide-slate-800 safe-area-bottom"
       >
         {/* Sticky Header with Close */}
         <div className="sticky top-0 bg-slate-900/95 backdrop-blur z-20 px-4 sm:px-6 py-3 flex items-center justify-between border-b border-slate-800">
@@ -137,16 +135,6 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                     <span>SEALED PALLET • READY TO DELIVER</span>
                   </span>
-                ) : selectedImageIndex === 1 ? (
-                  <span className="text-cyan-300 border-cyan-500/30 flex items-center gap-1.5">
-                    <Camera className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>LIVE PRODUCT PHOTO #1 • UNBOXED</span>
-                  </span>
-                ) : selectedImageIndex === 2 ? (
-                  <span className="text-cyan-300 border-cyan-500/30 flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>LIVE PRODUCT PHOTO #2 • DETAIL ANGLE</span>
-                  </span>
                 ) : (
                   <span className="text-emerald-300 border-emerald-500/30 flex items-center gap-1.5">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
@@ -196,14 +184,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
             {/* Labeled Thumbnails Row */}
             {product.images.length > 1 && (
-              <div className="grid grid-cols-4 gap-2 pt-1">
+              <div className="grid grid-cols-2 gap-2 pt-1">
                 {product.images.map((img, idx) => {
                   const label = idx === 0 
                     ? 'Sealed Pallet' 
-                    : idx === 1 
-                    ? 'Live Photo 1' 
-                    : idx === 2 
-                    ? 'Live Photo 2' 
                     : 'Manifest Seal';
                   const isSelected = selectedImageIndex === idx;
 
@@ -227,8 +211,6 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                         />
                         {idx === 0 ? (
                           <span className="absolute top-1 left-1 w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-slate-950"></span>
-                        ) : idx === 1 || idx === 2 ? (
-                          <span className="absolute top-1 left-1 w-2 h-2 rounded-full bg-cyan-400 ring-2 ring-slate-950"></span>
                         ) : (
                           <span className="absolute top-1 left-1 w-2 h-2 rounded-full bg-amber-400 ring-2 ring-slate-950"></span>
                         )}

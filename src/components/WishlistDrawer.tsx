@@ -31,7 +31,7 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
     <div className="fixed inset-0 z-50 overflow-hidden bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
       <div onClick={onClose} className="absolute inset-0" />
 
-      <div className="absolute inset-y-0 right-0 max-w-full flex pl-10">
+      <div className="absolute inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
         <div 
           onClick={(e) => e.stopPropagation()}
           className="w-screen max-w-md bg-slate-900 border-l border-slate-800 shadow-2xl flex flex-col justify-between"

@@ -497,7 +497,7 @@ export const Footer: React.FC<FooterProps> = ({
         </div>
 
         {/* Bottom copyright line - Slim */}
-        <div className="mt-6 pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] text-slate-400">
+        <div className="mt-6 pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] text-slate-400 pb-20 md:pb-0">
           <p>
             © 2026 EuroPalletLiquidation B.V. All rights reserved. Trade Port Europe, Venlo.
           </p>

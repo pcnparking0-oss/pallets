@@ -100,8 +100,8 @@ export const HomeFAQSection: React.FC<HomeFAQSectionProps> = ({
   };
 
   return (
-    <section className="py-12 sm:py-16 bg-slate-950 border-t border-slate-800/80 text-slate-100">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <section className="py-8 sm:py-16 bg-slate-950 border-t border-slate-800/80 text-slate-100">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
         
         {/* Section Header */}
         <div className="text-center space-y-2.5 max-w-2xl mx-auto">
@@ -110,7 +110,7 @@ export const HomeFAQSection: React.FC<HomeFAQSectionProps> = ({
             <span>ESSENTIAL BUYER CLARIFICATIONS • 4 FAQS</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+          <h2 className="text-xl sm:text-3xl font-black text-white tracking-tight">
             {mockTranslate('faqTitle', language)}
           </h2>
 

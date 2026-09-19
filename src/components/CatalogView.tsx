@@ -173,17 +173,20 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
           </div>
 
           <button
-            onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
-            className="md:hidden flex items-center gap-1.5 px-3 py-2 bg-slate-800 rounded-xl text-xs font-bold text-slate-200"
+            onClick={() => setIsMobileFiltersOpen(true)}
+            className="md:hidden flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 active:scale-95 rounded-xl text-xs font-bold text-slate-200 border border-slate-700 cursor-pointer"
           >
             <Filter className="w-3.5 h-3.5 text-emerald-400" />
             <span>Filters</span>
+            {hasActiveFilters && (
+              <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+            )}
           </button>
         </div>
       </div>
 
       {/* Prominent Quick Pallet Dropdown Selector Bar */}
-      <div className="mb-6">
+      <div className="mb-4 sm:mb-6">
         <PalletDropdownMenu
           currency={currency}
           onSelectProduct={onViewDetails}
@@ -191,11 +194,198 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
         />
       </div>
 
+      {/* Mobile Horizontal Quick Category Pills Scroll */}
+      <div className="md:hidden mb-4 overflow-x-auto no-scrollbar flex items-center gap-2 py-1 -mx-4 px-4">
+        <button
+          onClick={() => onSelectCategory('all')}
+          className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+            selectedCategoryId === null
+              ? 'bg-emerald-500 text-slate-950 shadow-sm'
+              : 'bg-slate-900 text-slate-300 border border-slate-800 hover:bg-slate-800'
+          }`}
+        >
+          All Deals ({PRODUCTS.length})
+        </button>
+        {CATEGORIES.map(cat => (
+          <button
+            key={cat.id}
+            onClick={() => onSelectCategory(cat.id)}
+            className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              selectedCategoryId === cat.id
+                ? 'bg-emerald-500 text-slate-950 shadow-sm'
+                : 'bg-slate-900 text-slate-300 border border-slate-800 hover:bg-slate-800'
+            }`}
+          >
+            <span>{cat.name}</span>
+            <span className="text-[10px] opacity-70">({cat.itemCount})</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Mobile Filters Slide-Over Drawer */}
+      {isMobileFiltersOpen && (
+        <div className="md:hidden fixed inset-0 z-50 overflow-hidden bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div 
+            onClick={() => setIsMobileFiltersOpen(false)} 
+            className="absolute inset-0" 
+          />
+          <div className="absolute inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
+            <div 
+              onClick={(e) => e.stopPropagation()}
+              className="w-screen max-w-sm bg-slate-900 border-l border-slate-800 shadow-2xl flex flex-col justify-between"
+            >
+              {/* Drawer Top */}
+              <div className="px-5 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/70">
+                <div className="flex items-center gap-2">
+                  <SlidersHorizontal className="w-4 h-4 text-emerald-400" />
+                  <span className="text-sm font-black text-white uppercase tracking-wider">Filter Deals</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  {hasActiveFilters && (
+                    <button
+                      onClick={handleResetFilters}
+                      className="text-xs text-emerald-400 hover:text-emerald-300 font-bold"
+                    >
+                      Reset
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setIsMobileFiltersOpen(false)}
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Drawer Content */}
+              <div className="flex-1 overflow-y-auto p-5 space-y-5">
+                {/* Search within deals */}
+                <div>
+                  <label className="text-xs font-bold text-slate-300 block mb-1.5">Search within Deals</label>
+                  <div className="relative">
+                    <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Keyword, brand, or SKU..."
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Department Selection */}
+                <div>
+                  <label className="text-xs font-bold text-slate-300 block mb-1.5">Department</label>
+                  <div className="space-y-1 text-xs">
+                    <button
+                      onClick={() => onSelectCategory('all')}
+                      className={`w-full text-left px-3 py-2 rounded-xl transition-colors flex items-center justify-between ${
+                        selectedCategoryId === null
+                          ? 'bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/30'
+                          : 'bg-slate-950 text-slate-300 border border-slate-800/80'
+                      }`}
+                    >
+                      <span>All Categories</span>
+                      <span className="text-[10px] text-slate-500">{PRODUCTS.length}</span>
+                    </button>
+                    {CATEGORIES.map(cat => (
+                      <button
+                        key={cat.id}
+                        onClick={() => onSelectCategory(cat.id)}
+                        className={`w-full text-left px-3 py-2 rounded-xl transition-colors flex items-center justify-between ${
+                          selectedCategoryId === cat.id
+                            ? 'bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/30'
+                            : 'bg-slate-950 text-slate-300 border border-slate-800/80'
+                        }`}
+                      >
+                        <span className="truncate">{cat.name}</span>
+                        <span className="text-[10px] text-slate-500">{cat.itemCount}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Condition */}
+                <div>
+                  <label className="text-xs font-bold text-slate-300 block mb-1.5">Condition</label>
+                  <select
+                    value={selectedCondition}
+                    onChange={(e) => setSelectedCondition(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 cursor-pointer"
+                  >
+                    <option value="all">All Conditions</option>
+                    <option value="factory sealed">Factory Sealed Only</option>
+                    <option value="certified">Certified Overstock</option>
+                    <option value="grade a">Grade A+ (Brand New)</option>
+                  </select>
+                </div>
+
+                {/* Price Range */}
+                <div>
+                  <label className="text-xs font-bold text-slate-300 block mb-1.5">Price Range</label>
+                  <select
+                    value={selectedPriceRange}
+                    onChange={(e) => setSelectedPriceRange(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 cursor-pointer"
+                  >
+                    <option value="all">All Prices</option>
+                    <option value="under-150">Under €150</option>
+                    <option value="150-300">€150 - €300</option>
+                    <option value="300-500">€300 - €500</option>
+                    <option value="over-500">Over €500</option>
+                  </select>
+                </div>
+
+                {/* Brand */}
+                <div>
+                  <label className="text-xs font-bold text-slate-300 block mb-1.5">Brand</label>
+                  <select
+                    value={selectedBrand}
+                    onChange={(e) => setSelectedBrand(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 cursor-pointer"
+                  >
+                    <option value="all">All Brands ({allBrands.length})</option>
+                    {allBrands.map(b => (
+                      <option key={b} value={b}>{b}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* In stock */}
+                <div className="pt-2">
+                  <label className="flex items-center gap-2.5 text-xs text-slate-300 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={inStockOnly}
+                      onChange={(e) => setInStockOnly(e.target.checked)}
+                      className="w-4 h-4 rounded text-emerald-500 focus:ring-emerald-500 bg-slate-950 border-slate-800"
+                    />
+                    <span>In Stock only ({PRODUCTS.filter(p => p.inStock).length})</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Drawer Apply Bottom Action */}
+              <div className="p-4 bg-slate-950 border-t border-slate-800 safe-area-bottom">
+                <button
+                  onClick={() => setIsMobileFiltersOpen(false)}
+                  className="w-full py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2 active:scale-98"
+                >
+                  <span>Show {filteredProducts.length} Deals</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Main Grid: Sidebar Filters + Products List */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         
-        {/* Left Filters Sidebar (3 cols) */}
-        <div className={`md:col-span-3 space-y-5 ${isMobileFiltersOpen ? 'block' : 'hidden md:block'}`}>
+        {/* Left Filters Sidebar (3 cols - Desktop Only) */}
+        <div className="hidden md:block md:col-span-3 space-y-5">
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 space-y-4 shadow-sm sticky top-24">
             
             <div className="flex items-center justify-between pb-2 border-b border-slate-800">

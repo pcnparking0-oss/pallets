@@ -13,12 +13,6 @@ import palletOutdoorLot from '../assets/images/pallet_outdoor_lot_1788994925936.
 import palletLaptopsLot from '../assets/images/pallet_laptops_lot_1788995598793.jpg';
 import palletPowerLot from '../assets/images/pallet_power_lot_1788995613193.jpg';
 import palletWearablesLot from '../assets/images/pallet_wearables_lot_1788996773738.jpg';
-import appleWatchUltraLive from '../assets/images/apple_watch_ultra_live_1788996786720.jpg';
-import appleWatchUltraMacro from '../assets/images/apple_watch_ultra_macro_1788996798976.jpg';
-import garminFenix7xLive from '../assets/images/garmin_fenix_7x_live_1788996812918.jpg';
-import garminFenix7xDetail from '../assets/images/garmin_fenix_7x_detail_1788996826466.jpg';
-import garminMarqGen2Live from '../assets/images/garmin_marq_gen2_live_1788996839792.jpg';
-import garminMarqGen2Macro from '../assets/images/garmin_marq_gen2_macro_1788996853104.jpg';
 
 export const PRODUCTS: Product[] = [
   {
@@ -45,8 +39,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #01 • 41% OFF',
     images: [
       palletElectronicsLot,
-      'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Industry-leading noise canceling with two processors and 8 microphones for unprecedented quiet. Crystal clear hands-free calling with 4 beamforming microphones and advanced audio signal processing. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €419 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €170 / 41% margin against the €249 liquidation pallet price).',
@@ -110,8 +102,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #02 • 42% OFF',
     images: [
       palletSmartHomeLot,
-      'https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Upgraded inside and out, Sonos Move 2 delivers heart-pumping stereo sound wherever you go. IP56 weather resistance makes it durable for outdoor patios, while 24-hour battery life keeps the party going. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €499 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €210 / 42% margin against the €289 liquidation pallet price).',
@@ -175,8 +165,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #03 • APPLE M2',
     images: [
       palletElectronicsLot,
-      'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1561154464-82e9adf32764?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'The redesigned 11-inch iPad Air is supercharged by the astonishingly fast Apple M2 chip. It features a stunning Liquid Retina display, a new landscape camera perfect for FaceTime calls, and blazing-fast Wi-Fi 6E. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €699 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €200 / 29% margin against the €499 liquidation pallet price).',
@@ -241,8 +229,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #04 • 43% OFF',
     images: [
       palletElectronicsLot,
-      'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Meet Galaxy S24+, the ultimate smartphone with built-in Galaxy AI. Search like never before, get real-time voice translation on phone calls, and enhance your photos to perfection with generative editing. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €1,149 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €500 / 43% margin against the €649 liquidation pallet price).',
@@ -306,8 +292,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #05 • BUNDLE PACK',
     images: [
       palletGamingLot,
-      'https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1612287233207-686940026e6d?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Feast your eyes on vivid colors and crisp contrast with a 7-inch OLED screen. The wide adjustable stand allows comfortable viewing in tabletop mode, while 64GB of internal storage gives ample room for games. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €369 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €130 / 35% margin against the €239 liquidation pallet price).',
@@ -370,8 +354,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #06 • 120HZ FHD',
     images: [
       palletGamingLot,
-      'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1600080972464-8e5f35f63d08?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Play all your PC games anywhere on Windows 11 with the ASUS ROG Ally. Powered by the high-performance AMD Ryzen Z1 Extreme processor and equipped with a smooth 120Hz 1080p display with AMD FreeSync Premium. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €799 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €330 / 41% margin against the €469 liquidation pallet price).',
@@ -430,8 +412,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #07 • POPULAR',
     images: [
       palletSmartHomeLot,
-      'https://images.unsplash.com/photo-1550985543-f47f38aeee65?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1507499739999-097706ad8914?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Transform your home lighting with 16 million colors and 50,000 shades of warm-to-cool white light. Includes 3x E27 smart LED bulbs, Hue Bridge hub, and Smart Wireless Dimmer Switch. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €159 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €70 / 44% margin against the €89 liquidation pallet price).',
@@ -490,8 +470,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #08 • 53% OFF',
     images: [
       palletSmartHomeLot,
-      'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Upgrade your home energy efficiency and front door security in one package. The Nest Learning Thermostat learns your schedule to save on heating bills, while the Nest Doorbell (Battery) alerts you to packages and visitors. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €429 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €230 / 53% margin against the €199 liquidation pallet price).',
@@ -550,8 +528,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #09 • BESTSELLER',
     images: [
       palletAppliancesLot,
-      'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: "Enjoy freshly brewed Italian coffee at home with the De'Longhi Magnifica S. Built-in steel burr grinder with 13 grind settings, traditional milk frothing arm for creamy cappuccinos, and customizable aroma strength. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €449 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €180 / 40% margin against the €269 liquidation pallet price).",
@@ -614,8 +590,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #10 • TOP RATED',
     images: [
       palletAppliancesLot,
-      'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Cook two different foods, two different ways, and finish at the exact same time with Ninja DualZone technology. Extra-large 9.5-liter capacity feeds 8+ people, with up to 75% less fat than traditional deep frying. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €269 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €110 / 41% margin against the €159 liquidation pallet price).',
@@ -674,8 +648,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #11 • DESIGNER APPAREL',
     images: [
       palletApparelLot,
-      'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Certified Grade-A overstock assortment from premier European department store clearances. Includes Hugo Boss slim-fit tailored virgin wool jackets, Ralph Lauren Oxford cotton shirts, and Tommy Hilfiger knitwear with all security seals, tags, and original hangers. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €995 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €606 / 61% margin against the €389 liquidation pallet price).',
@@ -735,8 +707,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #12 • FOOTWEAR CLEARANCE',
     images: [
       palletApparelLot,
-      'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'High-value liquidation footwear collection sourced from German and Dutch retail chains. Features authentic Nike Air Max editions, Adidas Ultraboost running shoes, and handcrafted Tuscan Italian calfskin leather dress shoes in original individual retail shoe boxes. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €849 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €500 / 59% margin against the €349 liquidation pallet price).',
@@ -796,8 +766,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #13 • 43% OFF',
     images: [
       palletVacuumLot,
-      'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Dyson most powerful intelligent cordless vacuum. Features Fluffy Optic cleaner head that reveals 2x more invisible dust, and an acoustic piezo sensor that counts and measures the size of dust particles. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €799 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €340 / 43% margin against the €459 liquidation pallet price).',
@@ -856,8 +824,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #14 • SAVE €850',
     images: [
       palletVacuumLot,
-      'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'The pinnacle of automated floorcare. Features 100% more suction power and the Clean Base Auto-Fill Dock that empties debris for up to 60 days and refills liquid for up to 30 days of hands-free cleaning. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €1,399 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €850 / 61% margin against the €549 liquidation pallet price).',
@@ -916,8 +882,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #15 • CONTRACTOR GRADE',
     images: [
       palletToolsLot,
-      'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1581147036324-c17ac41dfa6c?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Heavy-duty 18V cordless combo for trade professionals. Includes brushless combi drill GSB 18V-55 with metal chuck, GDR 18V-200 impact driver, two 4.0Ah ProCORE18V high-output batteries, GAL 18V-40 quick charger, and rugged L-BOXX case. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €379 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €180 / 47% margin against the €199 liquidation pallet price).',
@@ -976,8 +940,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #16 • 6-TOOL LOT',
     images: [
       palletToolsLot,
-      'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'The ultimate professional contractor outfit. Contains combi drill DHP453, impact driver DTD152, circular saw DSS611, reciprocating saw DJR186, angle grinder DGA452, LED torch, two 5.0Ah LXT batteries, DC18RC rapid charger, and heavy-duty duffle. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €899 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €410 / 46% margin against the €489 liquidation pallet price).',
@@ -1036,8 +998,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #17 • SAPPHIRE SOLAR',
     images: [
       palletWearablesLot,
-      garminFenix7xLive,
-      garminFenix7xDetail,
       palletManifestSeal
     ],
     description: 'Conquer every hour of the day with advanced training features, 24/7 health and wellness monitoring, scratch-resistant sapphire solar lens, and an ultra-bright built-in multi-LED flashlight. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €899 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €400 / 44% margin against the €499 liquidation pallet price).',
@@ -1099,8 +1059,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #18 • TITANIUM 49MM',
     images: [
       palletWearablesLot,
-      appleWatchUltraLive,
-      appleWatchUltraMacro,
       palletManifestSeal
     ],
     description: 'The most capable and rugged Apple Watch. Built for endurance, outdoor adventure, and water sports with a 49mm aerospace-grade titanium case, extra-long battery life, and the brightest Apple display ever (3,000 nits). Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €899 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €270 / 30% margin against the €629 liquidation pallet price).',
@@ -1163,8 +1121,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #19 • SAVE €700',
     images: [
       palletTvScreensLot,
-      'https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1461151304267-38535e780c79?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Self-lit OLED pixels shine brighter with Brightness Booster. Infinite contrast, 100% color volume, ultra-fast 0.1ms response time, 4x HDMI 2.1 ports for 120Hz 4K gaming, and Dolby Atmos cinematic sound. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €1,599 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €700 / 44% margin against the €899 liquidation pallet price).',
@@ -1224,8 +1180,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #20 • 43% OFF',
     images: [
       palletOutdoorLot,
-      'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'For effortless cleaning of stone patios, driveways, cars, and garden walls. Water-cooled induction motor provides superior reliability and long service life. Integrated Plug "n" Clean detergent system for instant detergent application. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €439 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €190 / 43% margin against the €249 liquidation pallet price).',
@@ -1285,8 +1239,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #21 • HIGH DEMAND',
     images: [
       palletGamingLot,
-      'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'The pinnacle of console gaming performance. PS5 Pro features PlayStation Spectral Super Resolution (PSSR) AI upscaling, 2TB ultra-fast internal NVMe SSD, advanced ray tracing, and stable 4K 60-120fps fidelity mode gaming. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €899 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €310 / 34% margin against the €589 liquidation pallet price).',
@@ -1345,8 +1297,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #22 • TITANIUM 256GB',
     images: [
       palletElectronicsLot,
-      'https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Forged in titanium with aerospace-grade strength. Powered by the groundbreaking A17 Pro chip with console-quality graphics, customizable Action button, and Apple most powerful smartphone camera system with 5x optical zoom. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €1,479 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €630 / 43% margin against the €849 liquidation pallet price).',
@@ -1409,8 +1359,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #23 • CONTRACTOR KIT',
     images: [
       palletToolsLot,
-      'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1581147036324-c17ac41dfa6c?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Heavy-duty construction outfit for certified trade contractors. Packed in IP65 weather-sealed ToughSystem 2.0 stacking storage boxes. High-efficiency brushless motors provide 57% more run time than brushed equivalents. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €1,349 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €600 / 44% margin against the €749 liquidation pallet price).',
@@ -1469,8 +1417,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #24 • FAST SELLER',
     images: [
       palletAppliancesLot,
-      'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Curl, shape, smooth, and hide flyaways with no extreme heat. Re-engineered styling attachments harness Enhanced Coanda airflow for faster, easier styling with greater control. Packaged in a cushioned Prussian blue presentation case. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €599 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €230 / 38% margin against the €369 liquidation pallet price).',
@@ -1529,8 +1475,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #25 • SAVE €900',
     images: [
       palletTvScreensLot,
-      'https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1461151304267-38535e780c79?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Brilliant picture quality powered by Quantum Mini LEDs. Noticeable detail in both the darkest and brightest scenes with ultra-fine light control. Anti-Glare with Ultra Viewing Angle eliminates reflections in sunlit rooms. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €1,899 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €900 / 47% margin against the €999 liquidation pallet price).',
@@ -1590,8 +1534,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #26 • ULTRA AUDIO',
     images: [
       palletElectronicsLot,
-      'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'The definitive Bose audio package. Includes the flagship Bose QuietComfort Ultra Over-Ear headphones with breakthrough spatialized audio and world-class active noise cancellation, bundled with the rugged IP67 SoundLink Max portable boombox. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €729 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €310 / 43% margin against the €419 liquidation pallet price).',
@@ -1650,8 +1592,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #27 • AUTOMATED DOCK',
     images: [
       palletVacuumLot,
-      'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Completely forget about cleaning. The RockDock Ultra all-in-one docking station empties dust for up to 7 weeks, washes mop pads with warm air drying, and automatically refills clean water tank. Armed with 6,000Pa HyperForce suction. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €1,499 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €700 / 47% margin against the €799 liquidation pallet price).',
@@ -1710,8 +1650,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #28 • 70KM RANGE',
     images: [
       palletOutdoorLot,
-      'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1597404294360-feeeda04612e?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'The master of city commuting. Features RideyLONG range technology delivering up to 70km on a single charge, rear-wheel drive 900W motor conquering 22% inclines, front hydraulic suspension, and rear adjustable double springs. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €899 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €370 / 41% margin against the €529 liquidation pallet price).',
@@ -1770,8 +1708,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #29 • BARISTA CHOICE',
     images: [
       palletAppliancesLot,
-      'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Third wave specialty coffee with assisted tamping and automated microfoam texturing. The touch touchscreen displays step-by-step barista guidance, while ThermoJet heating reaches extraction temperature in just 3 seconds. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €1,199 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €550 / 46% margin against the €649 liquidation pallet price).',
@@ -1830,8 +1766,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #30 • TRADE MONSTER',
     images: [
       palletToolsLot,
-      'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1581147036324-c17ac41dfa6c?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'The heavyweight standard for demolition, framing, and industrial mechanical installations. Milwaukee M18 FUEL combines POWERSTATE brushless motors, REDLITHIUM battery architecture, and REDLINK PLUS intelligence for unmatched durability. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €1,599 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €770 / 48% margin against the €829 liquidation pallet price).',
@@ -1890,8 +1824,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #31 • 61% OFF LUXURY',
     images: [
       palletApparelLot,
-      'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Certified authentic Grade-A department store liquidation crate sourced from Milan and Paris boutique clearances. Assortment includes structured full-grain calfskin shoulder bags, crossbodies, cardholders, and matching leather wallets from Gucci, Prada, and Saint Laurent. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €4,850 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €2,960 / 61% margin against the €1,890 liquidation pallet price).',
@@ -1950,8 +1882,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #32 • M3 PRO SPACE BLACK',
     images: [
       palletLaptopsLot,
-      'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'The world most advanced pro laptop. Powered by M3 Pro with 11-core CPU and 14-core GPU with hardware-accelerated ray tracing. Liquid Retina XDR display with 1,000 nits sustained brightness and up to 18 hours of continuous battery life. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €2,499 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €1,009 / 40% margin against the €1,490 liquidation pallet price).',
@@ -2010,8 +1940,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #33 • 2048WH SOLAR',
     images: [
       palletPowerLot,
-      'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Energy independence for home backup, off-grid camping, and outdoor workstations. 2048Wh premium LFP (LiFePO4) chemistry lasts 10 years of daily use (3,000 cycles). Charges from 0-80% in 43 minutes with dual AC + solar combination. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €2,099 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €950 / 45% margin against the €1,149 liquidation pallet price).',
@@ -2070,8 +1998,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #34 • HALF PRICE',
     images: [
       palletWearablesLot,
-      garminMarqGen2Live,
-      garminMarqGen2Macro,
       palletManifestSeal
     ],
     description: 'A modern tool watch handcrafted from a single block of Grade-5 titanium for 5x greater hardness than steel. Features a domed sapphire crystal, 360-degree compass markings on the bezel, and an innovative hybrid leather/FKM rubber sweat-resistant strap. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €1,950 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €970 / 50% margin against the €980 liquidation pallet price).',
@@ -2131,8 +2057,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #35 • FLY MORE COMBO',
     images: [
       palletElectronicsLot,
-      'https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'DJI most advanced mini drone to date. Weighing under 249g to exempt pilots from strict training certifications in many countries. Features omnidirectional obstacle sensing, ActiveTrack 360, 4K/60fps HDR true vertical video, and 20km FHD video transmission. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €1,129 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €450 / 40% margin against the €679 liquidation pallet price).',
@@ -2191,8 +2115,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #36 • CAST IRON ARTISAN',
     images: [
       palletAppliancesLot,
-      'https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'The kitchen icon built to last generations. Full die-cast metal construction ensures rock-solid stability during kneading heavy bread doughs. Features planetary mixing action where the beater rotates while moving around the bowl to 59 touchpoints. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €649 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €300 / 46% margin against the €349 liquidation pallet price).',
@@ -2255,8 +2177,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #37 • SENSEIQ AI',
     images: [
       palletAppliancesLot,
-      'https://images.unsplash.com/photo-1559591937-e6205844439c?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'The most advanced electric toothbrush in the world. SenseIQ technology senses pressure, motion, and coverage up to 100 times per second, automatically adjusting intensity when you press too hard. Finished in seamless Champagne Gold with stitched vegan leather charging case. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €349 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €160 / 46% margin against the €189 liquidation pallet price).',
@@ -2315,8 +2235,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #38 • ICONIC SOUND',
     images: [
       palletElectronicsLot,
-      'https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Classic rock heritage meets cutting-edge acoustic engineering. Stanmore III has an outward-angled tweeter array and updated waveguides to deliver a consistently solid sound that is so wide it chases you around the room. Bundled with Major V on-ear headphones with 100+ hours battery life. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €499 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €230 / 46% margin against the €269 liquidation pallet price).',
@@ -2375,8 +2293,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #39 • STIHL PRO KIT',
     images: [
       palletOutdoorLot,
-      'https://images.unsplash.com/photo-1590856029826-c7a73142bbf1?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'Quiet, emission-free power for professional arborists, forestry caretakers, and property estates. Stihl AP battery system delivers gas-equivalent cutting torque without exhaust, pull cords, or engine maintenance. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €1,190 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €541 / 45% margin against the €649 liquidation pallet price).',
@@ -2435,8 +2351,6 @@ export const PRODUCTS: Product[] = [
     badge: 'PALLET #40 • 62% OFF DOWN JACKETS',
     images: [
       palletApparelLot,
-      'https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1539533018447-63fcce667823?auto=format&fit=crop&w=1200&q=80',
       palletManifestSeal
     ],
     description: 'High-margin winter luxury liquidation lot sourced from luxury department store seasonal clearances across Zurich, Milan, and Amsterdam. Master sealed garments include Stone Island Crinkle Reps NY garment-dyed down parkas and iconic Moncler Maya lacquer down jackets. Product Quality: Grade A+ Factory Sealed (100% brand new, verified authentic retail stock in original manufacturer packaging with intact tamper-evident security seals, zero cosmetic wear, and full manufacturer warranty eligibility). Total Worth After Unboxing: €5,600 (total retail replacement value across verified European retail outlets; yields an instant unboxed equity surplus of €3,450 / 62% margin against the €2,150 liquidation pallet price).',

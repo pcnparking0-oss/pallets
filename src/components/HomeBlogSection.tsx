@@ -31,18 +31,18 @@ export const HomeBlogSection: React.FC<HomeBlogSectionProps> = ({
   const posts = BLOG_POSTS.slice(0, 4);
 
   return (
-    <section className="py-12 sm:py-16 bg-slate-900/60 border-t border-slate-800/80 text-slate-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <section className="py-8 sm:py-16 bg-slate-900/60 border-t border-slate-800/80 text-slate-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
         
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800 pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800 pb-5 sm:pb-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold">
               <BookOpen className="w-3.5 h-3.5" />
               <span>LIQUIDATION KNOWLEDGE BASE • 4 GUIDES</span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <h2 className="text-xl sm:text-3xl font-black text-white tracking-tight">
               {mockTranslate('blogTitle', language)}
             </h2>
 
@@ -53,7 +53,7 @@ export const HomeBlogSection: React.FC<HomeBlogSectionProps> = ({
 
           <button
             onClick={() => onNavigateBlog()}
-            className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-xs flex items-center gap-2 transition-all shrink-0 cursor-pointer border border-slate-700 shadow-sm"
+            className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shrink-0 cursor-pointer border border-slate-700 shadow-sm"
           >
             <span>{mockTranslate('viewAllPosts', language)}</span>
             <ArrowRight className="w-3.5 h-3.5 text-emerald-400" />
@@ -61,7 +61,7 @@ export const HomeBlogSection: React.FC<HomeBlogSectionProps> = ({
         </div>
 
         {/* 4 Blog Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {posts.map((post) => (
             <article
               key={post.id}
@@ -131,10 +131,10 @@ export const HomeBlogSection: React.FC<HomeBlogSectionProps> = ({
 
       {/* Reader Modal for Selected Blog Post */}
       {activeModalPost && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/85 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 animate-in fade-in duration-200">
           <div 
             onClick={(e) => e.stopPropagation()}
-            className="bg-slate-900 border border-slate-700/80 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col"
+            className="bg-slate-900 border border-slate-700/80 rounded-t-3xl sm:rounded-2xl w-full max-w-3xl max-h-[94vh] sm:max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col safe-area-bottom"
           >
             {/* Modal Header */}
             <div className="relative aspect-video sm:aspect-[21/9] overflow-hidden bg-slate-950 shrink-0">

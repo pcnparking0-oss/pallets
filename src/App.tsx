@@ -23,11 +23,13 @@ import { HomeBlogSection } from './components/HomeBlogSection';
 import { HomeFAQSection } from './components/HomeFAQSection';
 import { Language } from './utils/translations';
 import { CheckCircle2, ShoppingBag } from 'lucide-react';
+import { MobileBottomNav } from './components/MobileBottomNav';
 
 export default function App() {
   // Navigation & View
   const [currentView, setCurrentView] = useState<PageView>('home');
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleNavigateView = (view: PageView) => {
     if (view === 'home') {
@@ -267,21 +269,45 @@ export default function App() {
       {/* Main Header with Menu: Home, Shop, About, Contact, Blog */}
       <Header
         currentView={currentView}
-        onNavigateView={handleNavigateView}
+        onNavigateView={(view) => {
+          setIsMobileMenuOpen(false);
+          handleNavigateView(view);
+        }}
         currency={currency}
         onToggleCurrency={() => setCurrency(prev => prev === 'EUR' ? 'GBP' : 'EUR')}
         language={language}
         onSelectLanguage={handleSelectLanguage}
         cartItems={cartItems}
         wishlistIds={wishlistIds}
-        onOpenCart={() => setIsCartOpen(true)}
-        onOpenWishlist={() => setIsWishlistOpen(true)}
-        onOpenTrackOrder={() => setIsTrackOrderOpen(true)}
+        onOpenCart={() => {
+          setIsMobileMenuOpen(false);
+          setIsCartOpen(true);
+        }}
+        onOpenWishlist={() => {
+          setIsMobileMenuOpen(false);
+          setIsWishlistOpen(true);
+        }}
+        onOpenTrackOrder={() => {
+          setIsMobileMenuOpen(false);
+          setIsTrackOrderOpen(true);
+        }}
         onSelectProduct={handleViewProduct}
-        onSelectCategory={handleSelectCategory}
+        onSelectCategory={(catId) => {
+          setIsMobileMenuOpen(false);
+          handleSelectCategory(catId);
+        }}
         selectedCategoryId={selectedCategoryId}
-        onNavigateHome={() => handleNavigateView('home')}
-        onNavigateCatalog={() => handleNavigateView('shop')}
+        onNavigateHome={() => {
+          setIsMobileMenuOpen(false);
+          handleNavigateView('home');
+        }}
+        onNavigateCatalog={() => {
+          setIsMobileMenuOpen(false);
+          handleNavigateView('shop');
+        }}
+        isMobileMenuOpen={isMobileMenuOpen}
+        onToggleMobileMenu={() => setIsMobileMenuOpen(prev => !prev)}
+        onCloseMobileMenu={() => setIsMobileMenuOpen(false)}
       />
 
       {/* Main Content View (Home / Shop / About / Contact / Blog) */}
@@ -457,6 +483,29 @@ export default function App() {
         onClose={() => setIsTrackOrderOpen(false)}
         orders={orders}
         currency={currency}
+      />
+
+      {/* Mobile Bottom Navigation Bar (Always visible on mobile devices < 768px) */}
+      <MobileBottomNav
+        currentView={currentView}
+        onNavigateView={(view) => {
+          setIsMobileMenuOpen(false);
+          handleNavigateView(view);
+        }}
+        cartItems={cartItems}
+        wishlistIds={wishlistIds}
+        onOpenCart={() => {
+          setIsMobileMenuOpen(false);
+          setIsCartOpen(true);
+        }}
+        onOpenWishlist={() => {
+          setIsMobileMenuOpen(false);
+          setIsWishlistOpen(true);
+        }}
+        currency={currency}
+        language={language}
+        isMenuOpen={isMobileMenuOpen}
+        onToggleMenu={() => setIsMobileMenuOpen(prev => !prev)}
       />
 
     </div>

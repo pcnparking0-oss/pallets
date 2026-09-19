@@ -82,7 +82,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         className="absolute inset-0" 
       />
 
-      <div className="absolute inset-y-0 right-0 max-w-full flex pl-10">
+      <div className="absolute inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
         <div 
           onClick={(e) => e.stopPropagation()}
           className="w-screen max-w-md bg-slate-900 border-l border-slate-800 shadow-2xl flex flex-col justify-between"
@@ -245,7 +245,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
           {/* Drawer Footer / Checkout Summary */}
           {cartItems.length > 0 && (
-            <div className="p-5 bg-slate-950 border-t border-slate-800 space-y-3">
+            <div className="p-4 sm:p-5 pb-8 sm:pb-5 safe-area-bottom bg-slate-950 border-t border-slate-800 space-y-3">
               
               {/* Promo code form */}
               {couponCode ? (

@@ -120,7 +120,7 @@ export const PalletDropdownMenu: React.FC<PalletDropdownMenuProps> = ({
                   const prod = PRODUCTS.find(p => p.id === e.target.value);
                   if (prod) onSelectProduct(prod);
                 }}
-                className="w-full pl-3 pr-10 py-2.5 bg-slate-950 border-2 border-emerald-500/50 hover:border-emerald-400 rounded-xl text-xs sm:text-sm font-semibold text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-inner appearance-none cursor-pointer"
+                className="w-full pl-3 pr-10 py-3 bg-slate-950 border-2 border-emerald-500/50 hover:border-emerald-400 rounded-xl text-xs sm:text-sm font-semibold text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-inner appearance-none cursor-pointer"
               >
                 <option value="">
                   ▾ Click here to choose from all {PRODUCTS.length} Pallet Products...
@@ -150,7 +150,7 @@ export const PalletDropdownMenu: React.FC<PalletDropdownMenuProps> = ({
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-haspopup="true"
-        className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold transition-all border ${
+        className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
           isOpen
             ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-lg shadow-emerald-500/20'
             : 'bg-slate-900/90 hover:bg-slate-800 text-slate-200 border-slate-700 hover:border-emerald-500/60'
@@ -171,7 +171,7 @@ export const PalletDropdownMenu: React.FC<PalletDropdownMenuProps> = ({
       {isOpen && (
         <div 
           id="header-pallets-dropdown-menu"
-          className="absolute left-0 mt-2 w-[340px] sm:w-[460px] md:w-[540px] bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl z-50 overflow-hidden backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-150"
+          className="absolute left-0 mt-2 w-[calc(100vw-2rem)] max-w-lg sm:w-[480px] bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl z-50 overflow-hidden backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-150"
         >
           {/* Header of Dropdown */}
           <div className="p-3.5 bg-slate-950 border-b border-slate-800 flex items-center justify-between gap-2">

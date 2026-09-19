@@ -5,10 +5,8 @@ import {
   Star, 
   Check, 
   Eye, 
-  Sparkles, 
   ShieldCheck, 
-  Truck,
-  Camera 
+  Truck
 } from 'lucide-react';
 import { Product, Currency } from '../types';
 import { formatCurrency } from '../utils/formatters';
@@ -76,7 +74,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
           <div className="flex items-center gap-1.5">
             <span className="bg-slate-950/80 backdrop-blur text-slate-300 font-mono text-[9px] px-1.5 py-0.5 rounded border border-slate-700/80">
-              4 Photos
+              {product.images.length} Photos
             </span>
             <button
               onClick={(e) => {
@@ -91,56 +89,41 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         </div>
 
-        {/* Quick Photo Switcher Dots (Pallet, Live 1, Live 2, Seal) */}
+        {/* Quick Photo Switcher Dots (Pallet, Seal) */}
         {product.images.length > 1 && (
-          <div className="absolute top-12 right-2.5 flex flex-col gap-1 z-10 bg-slate-950/70 p-1 rounded-md backdrop-blur border border-slate-800 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="absolute top-11 right-2 flex flex-col gap-1.5 z-10 bg-slate-950/85 p-1 rounded-lg backdrop-blur border border-slate-800 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
             {product.images.map((_, idx) => (
               <button
                 key={idx}
                 type="button"
+                aria-label={`View photo ${idx + 1}`}
                 onClick={(e) => {
                   e.stopPropagation();
                   setActivePhotoIndex(idx);
                 }}
-                className={`w-2 h-2 rounded-full transition-all ${
+                className={`w-3.5 h-3.5 rounded-full flex items-center justify-center transition-all cursor-pointer ${
                   activePhotoIndex === idx 
                     ? idx === 0 
-                      ? 'bg-emerald-400 ring-2 ring-emerald-500/40 scale-125' 
-                      : idx === 1 || idx === 2 
-                      ? 'bg-cyan-400 ring-2 ring-cyan-500/40 scale-125' 
-                      : 'bg-amber-400 ring-2 ring-amber-500/40 scale-125'
-                    : 'bg-slate-600 hover:bg-slate-400'
+                      ? 'bg-emerald-400 ring-2 ring-emerald-500/40 scale-110' 
+                      : 'bg-amber-400 ring-2 ring-amber-500/40 scale-110'
+                    : 'bg-slate-700 hover:bg-slate-500'
                 }`}
                 title={
                   idx === 0 
                     ? 'Sealed Pallet photo' 
-                    : idx === 1 
-                    ? 'Live Product Photo #1' 
-                    : idx === 2 
-                    ? 'Live Product Photo #2' 
-                    : 'Manifest & Seal'
+                    : 'Manifest & Tamper Seal'
                 }
               />
             ))}
           </div>
         )}
 
-        {/* Condition & Pallet / Live Status Tag Bottom */}
+        {/* Condition & Pallet Status Tag Bottom */}
         <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-[10px] z-10 pointer-events-none">
           {activePhotoIndex === 0 ? (
             <span className="bg-slate-900/90 backdrop-blur px-2 py-0.5 rounded text-emerald-300 font-medium border border-slate-700/60 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
               Sealed Pallet • Ready to Deliver
-            </span>
-          ) : activePhotoIndex === 1 ? (
-            <span className="bg-slate-900/90 backdrop-blur px-2 py-0.5 rounded text-cyan-300 font-medium border border-cyan-500/40 flex items-center gap-1">
-              <Camera className="w-3 h-3 text-cyan-400" />
-              Live Product Photo #1
-            </span>
-          ) : activePhotoIndex === 2 ? (
-            <span className="bg-slate-900/90 backdrop-blur px-2 py-0.5 rounded text-cyan-300 font-medium border border-cyan-500/40 flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-cyan-400" />
-              Live Detail Photo #2
             </span>
           ) : (
             <span className="bg-slate-900/90 backdrop-blur px-2 py-0.5 rounded text-amber-300 font-medium border border-amber-500/40 flex items-center gap-1">
@@ -240,10 +223,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {/* Quick Action Button */}
           <button
             onClick={handleAddClick}
-            className={`w-full py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all ${
+            className={`w-full min-h-[44px] py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
               isAdded
                 ? 'bg-emerald-600 text-white'
-                : 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20 active:scale-98'
+                : 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20 active:scale-95'
             }`}
           >
             {isAdded ? (
