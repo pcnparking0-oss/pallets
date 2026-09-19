@@ -218,14 +218,16 @@ export const PalletDropdownMenu: React.FC<PalletDropdownMenuProps> = ({
               filteredProducts.map((product) => {
                 const isSelected = product.id === selectedProductId;
                 return (
-                  <button
+                  <a
                     key={product.id}
                     id={`pallet-item-${product.palletNumber}`}
-                    onClick={() => {
+                    href={`/product/${product.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
                       onSelectProduct(product);
                       setIsOpen(false);
                     }}
-                    className={`w-full text-left p-2.5 rounded-xl flex items-center gap-3 transition-colors group ${
+                    className={`w-full text-left p-2.5 rounded-xl flex items-center gap-3 transition-colors group cursor-pointer ${
                       isSelected 
                         ? 'bg-emerald-500/15 border border-emerald-500/40' 
                         : 'hover:bg-slate-800/70'
@@ -244,8 +246,11 @@ export const PalletDropdownMenu: React.FC<PalletDropdownMenuProps> = ({
                       <img
                         src={product.images[0]}
                         alt={product.title}
+                        width={48}
+                        height={48}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                         loading="lazy"
+                        decoding="async"
                       />
                       <span className="absolute bottom-0 right-0 bg-slate-950/90 text-emerald-400 text-[8px] font-mono px-1 rounded-tl">
                         -{product.discountPercentage}%
@@ -283,7 +288,7 @@ export const PalletDropdownMenu: React.FC<PalletDropdownMenuProps> = ({
                     <div className="shrink-0 text-slate-500 group-hover:text-emerald-400 transition-colors pl-1">
                       <ExternalLink className="w-4 h-4" />
                     </div>
-                  </button>
+                  </a>
                 );
               })
             )}

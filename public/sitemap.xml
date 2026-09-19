@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://europalletsupply.com/sitemap-pages.xml</loc>
+    <lastmod>2026-09-19</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://europalletsupply.com/sitemap-categories.xml</loc>
+    <lastmod>2026-09-19</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://europalletsupply.com/sitemap-products.xml</loc>
+    <lastmod>2026-09-19</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://europalletsupply.com/sitemap-blog.xml</loc>
+    <lastmod>2026-09-19</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://europalletsupply.com/sitemap-keywords.xml</loc>
+    <lastmod>2026-09-19</lastmod>
+  </sitemap>
+</sitemapindex>

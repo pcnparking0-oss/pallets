@@ -82,10 +82,13 @@ export const ShopDropdownMenu: React.FC<ShopDropdownMenuProps> = ({
       onMouseLeave={handleMouseLeave}
     >
       {/* Shop Dropdown Trigger Button */}
-      <button
-        type="button"
+      <a
         id="shop-categories-dropdown-btn"
-        onClick={handleShopButtonClick}
+        href="/shop"
+        onClick={(e) => {
+          e.preventDefault();
+          handleShopButtonClick();
+        }}
         className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-sm ${
           isOpen || isActive
             ? 'bg-emerald-500 text-slate-950 ring-1 ring-emerald-400/40 shadow-sm'
@@ -101,7 +104,7 @@ export const ShopDropdownMenu: React.FC<ShopDropdownMenuProps> = ({
             isOpen ? 'rotate-180' : ''
           }`}
         />
-      </button>
+      </a>
 
       {/* Dropdown Menu Panel with continuous hover bridge */}
       {isOpen && (
@@ -113,8 +116,12 @@ export const ShopDropdownMenu: React.FC<ShopDropdownMenuProps> = ({
           >
             {/* Top Row: Browse All Liquidation Lots */}
             <div className="pb-3">
-              <button
-                onClick={handleAllDealsClick}
+              <a
+                href="/shop"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleAllDealsClick();
+                }}
                 className={`w-full p-2.5 rounded-xl flex items-center justify-between transition-all text-left group cursor-pointer ${
                   selectedCategoryId === null
                     ? 'bg-emerald-500/15 border border-emerald-500/50 text-white'
@@ -136,7 +143,7 @@ export const ShopDropdownMenu: React.FC<ShopDropdownMenuProps> = ({
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-emerald-400 group-hover:translate-x-0.5 transition-transform" />
-              </button>
+              </a>
             </div>
 
             {/* Categories Arranged in a 2-Column Grid */}
@@ -150,9 +157,13 @@ export const ShopDropdownMenu: React.FC<ShopDropdownMenuProps> = ({
                 {CATEGORIES.map((cat) => {
                   const isSelected = selectedCategoryId === cat.id;
                   return (
-                    <button
+                    <a
                       key={cat.id}
-                      onClick={() => handleCategoryClick(cat.id)}
+                      href={`/shop/${cat.slug}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleCategoryClick(cat.id);
+                      }}
                       className={`p-2 rounded-xl text-left flex items-center gap-2.5 transition-all border cursor-pointer ${
                         isSelected
                           ? 'bg-emerald-500/20 border-emerald-500/60 text-white'
@@ -161,7 +172,9 @@ export const ShopDropdownMenu: React.FC<ShopDropdownMenuProps> = ({
                     >
                       <img
                         src={cat.image}
-                        alt={cat.name}
+                        alt={`${cat.name} liquidation overstock lots`}
+                        width={40}
+                        height={40}
                         className="w-10 h-10 rounded-lg object-cover border border-slate-800 shrink-0"
                         referrerPolicy="no-referrer"
                       />
@@ -181,7 +194,7 @@ export const ShopDropdownMenu: React.FC<ShopDropdownMenuProps> = ({
                           {cat.popularBrands.slice(0, 2).join(', ')}
                         </span>
                       </div>
-                    </button>
+                    </a>
                   );
                 })}
               </div>

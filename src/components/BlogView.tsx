@@ -68,9 +68,8 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
 
         {/* Featured Article Banner */}
         {featuredPost && selectedCategory === 'All' && (
-          <div 
-            onClick={() => setSelectedPost(featuredPost)}
-            className="group cursor-pointer relative rounded-3xl overflow-hidden border border-slate-800 bg-slate-900/60 p-6 sm:p-10 transition-all hover:border-slate-700"
+          <article 
+            className="group relative rounded-3xl overflow-hidden border border-slate-800 bg-slate-900/60 p-6 sm:p-10 transition-all hover:border-slate-700"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
               <div className="lg:col-span-7 space-y-4">
@@ -87,7 +86,16 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
                 </div>
 
                 <h2 className="text-2xl sm:text-3xl font-black text-white group-hover:text-emerald-300 transition-colors leading-snug">
-                  {featuredPost.title}
+                  <a
+                    href={`/blog/${featuredPost.slug}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelectedPost(featuredPost);
+                    }}
+                    className="hover:underline focus:outline-none"
+                  >
+                    {featuredPost.title}
+                  </a>
                 </h2>
 
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
@@ -101,36 +109,50 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
                     </div>
                     <span>{featuredPost.author} • {featuredPost.authorRole}</span>
                   </div>
-                  <span className="text-emerald-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                  <a
+                    href={`/blog/${featuredPost.slug}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelectedPost(featuredPost);
+                    }}
+                    className="text-emerald-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform cursor-pointer"
+                  >
                     Read Guide <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
+                  </a>
                 </div>
               </div>
 
               <div className="lg:col-span-5 relative h-56 sm:h-72 rounded-2xl overflow-hidden border border-slate-800">
                 <img
                   src={featuredPost.imageUrl}
-                  alt={featuredPost.title}
+                  alt={`${featuredPost.title} - Resale and liquidation guide by EuroPalletLiquidation`}
+                  width={600}
+                  height={400}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
-          </div>
+          </article>
         )}
 
         {/* Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPosts.map(post => (
-            <div
+            <article
               key={post.id}
-              onClick={() => setSelectedPost(post)}
-              className="group cursor-pointer bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl overflow-hidden flex flex-col transition-all hover:shadow-xl hover:shadow-slate-950/40"
+              className="group bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl overflow-hidden flex flex-col transition-all hover:shadow-xl hover:shadow-slate-950/40"
             >
               <div className="relative h-44 w-full overflow-hidden bg-slate-950">
                 <img
                   src={post.imageUrl}
-                  alt={post.title}
+                  alt={`${post.title} - liquidation guide`}
+                  width={400}
+                  height={250}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <span className="absolute top-3 left-3 bg-slate-950/85 backdrop-blur px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold text-emerald-400 border border-slate-800">
                   {post.category}
@@ -152,7 +174,16 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
                   </div>
 
                   <h3 className="text-base font-bold text-white group-hover:text-emerald-300 transition-colors leading-snug">
-                    {post.title}
+                    <a
+                      href={`/blog/${post.slug}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setSelectedPost(post);
+                      }}
+                      className="hover:underline focus:outline-none"
+                    >
+                      {post.title}
+                    </a>
                   </h3>
 
                   <p className="text-xs text-slate-400 line-clamp-3 leading-relaxed">
@@ -162,12 +193,19 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
 
                 <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
                   <span className="text-slate-400 text-[11px]">{post.author}</span>
-                  <span className="text-emerald-400 font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                  <a
+                    href={`/blog/${post.slug}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelectedPost(post);
+                    }}
+                    className="text-emerald-400 font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform cursor-pointer"
+                  >
                     Read Article <ArrowRight className="w-3 h-3" />
-                  </span>
+                  </a>
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
 

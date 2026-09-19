@@ -1,0 +1,14 @@
+# robots.txt for EuroPalletSupply.com
+User-agent: *
+Allow: /
+Disallow: /checkout/success
+Disallow: /api/
+
+# Host & Sitemaps
+Host: https://europalletsupply.com
+Sitemap: https://europalletsupply.com/sitemap.xml
+Sitemap: https://europalletsupply.com/sitemap-pages.xml
+Sitemap: https://europalletsupply.com/sitemap-categories.xml
+Sitemap: https://europalletsupply.com/sitemap-products.xml
+Sitemap: https://europalletsupply.com/sitemap-blog.xml
+Sitemap: https://europalletsupply.com/sitemap-keywords.xml

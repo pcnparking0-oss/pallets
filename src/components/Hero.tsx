@@ -28,7 +28,11 @@ export const Hero: React.FC<HeroProps> = ({
       <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-0">
         <img
           src={heroWarehouseWorker}
-          alt="Central Europe Liquidation Logistics and Pallet Warehouse Hub in Venlo"
+          alt="Central Europe Liquidation Logistics and Pallet Warehouse Hub in Venlo Netherlands"
+          width={1920}
+          height={1080}
+          loading="eager"
+          fetchPriority="high"
           className="w-full h-full object-cover object-[center_28%] lg:object-[68%_25%]"
           referrerPolicy="no-referrer"
         />
@@ -60,21 +64,29 @@ export const Hero: React.FC<HeroProps> = ({
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3.5 pt-1 sm:pt-2">
-            <button
-              onClick={onExploreCatalog}
+            <a
+              href="/shop"
+              onClick={(e) => {
+                e.preventDefault();
+                onExploreCatalog();
+              }}
               className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm shadow-xl shadow-emerald-500/25 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
             >
               <span>Shop Today's Outlet Deals</span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </a>
 
-            <button
-              onClick={() => onSelectCategory('electronics-audio')}
+            <a
+              href="/shop/electronics-audio"
+              onClick={(e) => {
+                e.preventDefault();
+                onSelectCategory('electronics-audio');
+              }}
               className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 text-slate-200 hover:text-white font-semibold text-sm flex items-center justify-center gap-2 transition-colors backdrop-blur-sm cursor-pointer"
             >
               <Box className="w-4 h-4 text-emerald-400" />
               <span>Electronics Deals</span>
-            </button>
+            </a>
           </div>
 
           {/* Consumer Trust Badges */}

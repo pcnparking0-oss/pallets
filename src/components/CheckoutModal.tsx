@@ -20,6 +20,8 @@ import {
 } from 'lucide-react';
 import { CartItem, Currency, ShopOrder, ShippingMethod } from '../types';
 import { formatCurrency } from '../utils/formatters';
+import { submitOrderForm } from '../utils/api';
+
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -116,47 +118,53 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     setStep(2);
   };
 
-  const handleFinalOrderSubmit = () => {
+  const handleFinalOrderSubmit = async () => {
     setIsProcessing(true);
 
-    setTimeout(() => {
-      const generatedOrderNumber = `EPL-ORD-${Math.floor(100000 + Math.random() * 900000)}`;
-      const generatedTracking = `DHL-EU-${Math.floor(10000000 + Math.random() * 90000000)}`;
-      
-      const newOrder: ShopOrder = {
-        id: `ORD-${Date.now()}`,
-        orderNumber: generatedOrderNumber,
-        date: new Date().toISOString().split('T')[0],
-        items: [...cartItems],
-        subtotalEur,
-        discountEur: appliedDiscountEur,
-        couponCode: couponCode || undefined,
-        shippingEur: activeShippingCost,
-        shippingMethod: shippingMethodObj,
-        vatEur,
-        totalEur: finalTotalEur,
-        paymentMethod: formData.paymentMethod,
-        customer: {
-          fullName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          street: formData.street,
-          apartment: formData.apartment || undefined,
-          city: formData.city,
-          postalCode: formData.postalCode,
-          country: formData.country
-        },
-        status: 'Order Confirmed',
-        trackingNumber: generatedTracking,
-        carrier: shippingMethodObj.carrier,
-        estimatedDelivery: formData.shippingSpeed === 'express' ? '1-2 Business Days' : '3-4 Business Days'
-      };
+    const generatedOrderNumber = `EPL-ORD-${Math.floor(100000 + Math.random() * 900000)}`;
+    const generatedTracking = `DHL-EU-${Math.floor(10000000 + Math.random() * 90000000)}`;
+    
+    const newOrder: ShopOrder = {
+      id: `ORD-${Date.now()}`,
+      orderNumber: generatedOrderNumber,
+      date: new Date().toISOString().split('T')[0],
+      items: [...cartItems],
+      subtotalEur,
+      discountEur: appliedDiscountEur,
+      couponCode: couponCode || undefined,
+      shippingEur: activeShippingCost,
+      shippingMethod: shippingMethodObj,
+      vatEur,
+      totalEur: finalTotalEur,
+      paymentMethod: formData.paymentMethod,
+      customer: {
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        street: formData.street,
+        apartment: formData.apartment || undefined,
+        city: formData.city,
+        postalCode: formData.postalCode,
+        country: formData.country
+      },
+      status: 'Order Confirmed',
+      trackingNumber: generatedTracking,
+      carrier: shippingMethodObj.carrier,
+      estimatedDelivery: formData.shippingSpeed === 'express' ? '1-2 Business Days' : '3-4 Business Days'
+    };
 
+    try {
+      // Dispatch order confirmation and invoice email via Zoho SMTP
+      await submitOrderForm(newOrder);
+    } catch (e) {
+      console.warn('Zoho Mail order dispatch notification:', e);
+    } finally {
       setIsProcessing(false);
       onOrderCompleted(newOrder);
       onClose();
-    }, 1200);
+    }
   };
+
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/85 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 animate-in fade-in duration-200">

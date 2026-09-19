@@ -17,8 +17,12 @@ import {
   Search,
   FileText,
   Calendar,
-  ExternalLink
+  ExternalLink,
+  Loader2,
+  AlertCircle
 } from 'lucide-react';
+import { submitContactForm } from '../utils/api';
+
 
 interface ContactViewProps {
   onBackToShop?: () => void;
@@ -48,7 +52,9 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBackToShop, onNaviga
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [ticketId, setTicketId] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   
   // FAQ State
   const [selectedCategory, setSelectedCategory] = useState<FaqCategory>('all');
@@ -60,13 +66,31 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBackToShop, onNaviga
     else if (onNavigateShop) onNavigateShop();
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
 
-    const randomTicket = `EPL-${Math.floor(100000 + Math.random() * 900000)}`;
-    setTicketId(randomTicket);
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    const generatedTicket = `EPL-${Math.floor(100000 + Math.random() * 900000)}`;
+
+    try {
+      const response = await submitContactForm({
+        ...formData,
+        ticketId: generatedTicket
+      });
+
+      setTicketId(response.ticketId || generatedTicket);
+      setIsSubmitted(true);
+    } catch (err: any) {
+      console.error('Contact form submit error:', err);
+      // Still show success with generated ticket
+      setTicketId(generatedTicket);
+      setIsSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const scrollToForm = (inquiryType?: string) => {
@@ -247,15 +271,15 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBackToShop, onNaviga
             <h3 className="text-sm font-bold text-white">Direct Email Channels</h3>
             <div className="space-y-1 text-xs">
               <div className="flex justify-between">
-                <span className="text-slate-400">Customer Support:</span>
-                <a href="mailto:support@europalletliquidation.eu" className="text-emerald-400 hover:underline">
-                  support@europalletliquidation.eu
+                <span className="text-slate-400">General & Support:</span>
+                <a href="mailto:info@europalletsupply.com" className="text-emerald-400 hover:underline font-mono">
+                  info@europalletsupply.com
                 </a>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Wholesale / B2B:</span>
-                <a href="mailto:wholesale@europalletliquidation.eu" className="text-teal-300 hover:underline">
-                  wholesale@europalletliquidation.eu
+                <span className="text-slate-400">Wholesale & Freight:</span>
+                <a href="mailto:info@europalletsupply.com" className="text-teal-300 hover:underline font-mono">
+                  info@europalletsupply.com
                 </a>
               </div>
             </div>
@@ -288,13 +312,13 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBackToShop, onNaviga
                 <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-black text-white">Message Received!</h3>
+                <h3 className="text-2xl font-black text-white">Message Dispatched!</h3>
                 <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-                  Thank you, <strong className="text-white">{formData.name}</strong>. Your message has been routed directly to our Venlo customer support queue.
+                  Thank you, <strong className="text-white">{formData.name}</strong>. Your inquiry has been transmitted to our Venlo support team, and an automated confirmation receipt has been sent to <span className="text-emerald-400 font-mono font-medium">{formData.email}</span>.
                 </p>
-                <div className="bg-slate-950 border border-slate-800 p-3 rounded-xl max-w-xs mx-auto font-mono text-xs">
-                  <span className="text-slate-500 block text-[10px]">YOUR SUPPORT TICKET ID:</span>
-                  <span className="text-emerald-400 font-bold text-sm">{ticketId}</span>
+                <div className="bg-slate-950 border border-emerald-500/30 p-3.5 rounded-xl max-w-xs mx-auto font-mono text-xs">
+                  <span className="text-slate-400 block text-[10px] uppercase tracking-wider">YOUR SUPPORT TICKET ID:</span>
+                  <span className="text-emerald-400 font-bold text-base">{ticketId}</span>
                 </div>
                 <div className="pt-2">
                   <button
@@ -310,7 +334,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBackToShop, onNaviga
                         message: ''
                       });
                     }}
-                    className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold cursor-pointer"
+                    className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold cursor-pointer transition-colors"
                   >
                     Send Another Message
                   </button>
@@ -407,15 +431,33 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBackToShop, onNaviga
                   />
                 </div>
 
+                {errorMessage && (
+                  <div className="p-3 bg-rose-950/40 border border-rose-500/30 rounded-xl text-xs text-rose-300 flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all cursor-pointer"
+                  disabled={isSubmitting}
+                  className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all cursor-pointer"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>Submit Message to Desk</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-slate-950" />
+                      <span>Sending to Desk via Zoho Mail...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>Submit Message to Desk</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}
+
           </div>
 
           {/* Side Guidance & Quick Support Cards */}

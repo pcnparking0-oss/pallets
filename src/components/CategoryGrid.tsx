@@ -35,10 +35,14 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
             const isSelected = selectedCategoryId === category.id;
 
             return (
-              <div
+              <a
                 key={category.id}
-                onClick={() => onSelectCategory(category.id)}
-                className={`group cursor-pointer rounded-2xl p-2 sm:p-2.5 transition-all border flex flex-col active:scale-98 ${
+                href={`/shop/${category.slug}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSelectCategory(category.id);
+                }}
+                className={`group cursor-pointer rounded-2xl p-2 sm:p-2.5 transition-all border flex flex-col active:scale-98 block ${
                   isSelected
                     ? 'border-emerald-500 ring-2 ring-emerald-500/20 bg-slate-900'
                     : 'border-slate-800/90 hover:border-slate-700 bg-slate-900/60 hover:bg-slate-900 shadow-sm'
@@ -48,8 +52,12 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
                 <div className="relative h-28 sm:h-36 w-full rounded-xl overflow-hidden bg-slate-950 border border-slate-800/80">
                   <img
                     src={category.image}
-                    alt={category.name}
+                    alt={`${category.name} liquidation overstock lots`}
+                    width={320}
+                    height={240}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute top-2 right-2 bg-slate-950/85 backdrop-blur px-2 py-0.5 rounded-md text-[10px] font-mono font-bold text-emerald-400 border border-slate-800 shadow-sm">
@@ -74,7 +82,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
                     <ArrowRight className="w-3 h-3 text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-transform" />
                   </div>
                 </div>
-              </div>
+              </a>
             );
           })}
         </div>

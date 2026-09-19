@@ -62,12 +62,18 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
 
       // Search filter
       if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase();
+        const q = searchQuery.toLowerCase().trim();
         const match = 
           product.title.toLowerCase().includes(q) ||
           product.brand.toLowerCase().includes(q) ||
           product.sku.toLowerCase().includes(q) ||
-          product.categoryName.toLowerCase().includes(q);
+          product.categoryName.toLowerCase().includes(q) ||
+          (product.description && product.description.toLowerCase().includes(q)) ||
+          (product.keyFeatures && product.keyFeatures.some(f => f.toLowerCase().includes(q))) ||
+          (q.includes('phone') && (product.categoryId === 'smartphones-tablets' || product.title.toLowerCase().includes('iphone') || product.title.toLowerCase().includes('samsung') || product.title.toLowerCase().includes('pixel'))) ||
+          (q.includes('laptop') && (product.categoryId === 'computing-gaming' || product.title.toLowerCase().includes('laptop') || product.title.toLowerCase().includes('macbook') || product.title.toLowerCase().includes('thinkpad') || product.title.toLowerCase().includes('dell'))) ||
+          (q.includes('amazon') && (product.title.toLowerCase().includes('amazon') || product.title.toLowerCase().includes('echo') || product.condition.toLowerCase().includes('return') || product.condition.toLowerCase().includes('overstock'))) ||
+          (q.includes('tool') && (product.categoryId === 'power-tools' || product.brand.toLowerCase().includes('dewalt') || product.brand.toLowerCase().includes('bosch') || product.brand.toLowerCase().includes('makita')));
         if (!match) return false;
       }
 

@@ -48,7 +48,7 @@ export const AboutView: React.FC<AboutViewProps> = ({
             </h1>
 
             <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-              EuroPalletLiquidation B.V. bridges the gap between major European retail distribution networks and consumers, resellers, and small businesses. We acquire verified overstock, seasonal shelf pulls, and certified returns, making them available at up to 80% below retail MSRP.
+              EuroPalletSupply B.V. bridges the gap between major European retail distribution networks and consumers, resellers, and small businesses. We acquire verified overstock, seasonal shelf pulls, and certified returns, making them available at up to 80% below retail MSRP. Contact our wholesale team at <a href="mailto:info@europalletsupply.com" className="text-emerald-400 font-mono hover:underline">info@europalletsupply.com</a>.
             </p>
 
             <div className="pt-2 flex flex-wrap gap-3">

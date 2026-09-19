@@ -51,13 +51,17 @@ export const HomeBlogSection: React.FC<HomeBlogSectionProps> = ({
             </p>
           </div>
 
-          <button
-            onClick={() => onNavigateBlog()}
+          <a
+            href="/blog"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigateBlog();
+            }}
             className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shrink-0 cursor-pointer border border-slate-700 shadow-sm"
           >
             <span>{mockTranslate('viewAllPosts', language)}</span>
             <ArrowRight className="w-3.5 h-3.5 text-emerald-400" />
-          </button>
+          </a>
         </div>
 
         {/* 4 Blog Posts Grid */}
@@ -72,7 +76,11 @@ export const HomeBlogSection: React.FC<HomeBlogSectionProps> = ({
               <div className="relative aspect-video overflow-hidden bg-slate-900">
                 <img
                   src={post.imageUrl}
-                  alt={post.title}
+                  alt={`${post.title} - liquidation guide`}
+                  width={480}
+                  height={270}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
@@ -98,7 +106,16 @@ export const HomeBlogSection: React.FC<HomeBlogSectionProps> = ({
                   </div>
 
                   <h3 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors line-clamp-2 leading-snug">
-                    {post.title}
+                    <a
+                      href={`/blog/${post.slug}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setActiveModalPost(post);
+                      }}
+                      className="hover:underline focus:outline-none"
+                    >
+                      {post.title}
+                    </a>
                   </h3>
 
                   <p className="text-xs text-slate-400 line-clamp-3 leading-relaxed">
@@ -117,10 +134,17 @@ export const HomeBlogSection: React.FC<HomeBlogSectionProps> = ({
                     </span>
                   </div>
 
-                  <span className="text-emerald-400 font-bold text-xs flex items-center gap-1 shrink-0 group-hover:translate-x-0.5 transition-transform">
+                  <a
+                    href={`/blog/${post.slug}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveModalPost(post);
+                    }}
+                    className="text-emerald-400 font-bold text-xs flex items-center gap-1 shrink-0 group-hover:translate-x-0.5 transition-transform"
+                  >
                     <span>Read</span>
                     <ChevronRight className="w-3.5 h-3.5" />
-                  </span>
+                  </a>
                 </div>
               </div>
             </article>

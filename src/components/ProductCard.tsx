@@ -52,9 +52,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       >
         <img
           src={currentImage}
-          alt={product.title}
+          alt={`${product.title} - ${product.condition} condition liquidation lot by ${product.brand}`}
+          width={400}
+          height={300}
           className="w-full h-full object-cover group-hover:scale-105 transition-all duration-300"
           loading="lazy"
+          decoding="async"
           referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-black/30 pointer-events-none" />
@@ -83,6 +86,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               }}
               className="p-1.5 rounded-full bg-slate-900/80 hover:bg-slate-800 backdrop-blur text-slate-300 hover:text-white transition-colors border border-slate-700/60"
               title={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+              aria-label={isWishlisted ? `Remove ${product.title} from wishlist` : `Add ${product.title} to wishlist`}
             >
               <Heart className={`w-4 h-4 ${isWishlisted ? 'text-rose-500 fill-rose-500' : ''}`} />
             </button>
@@ -162,7 +166,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
           {/* Title */}
           <h3 className="text-xs sm:text-sm font-bold text-slate-100 group-hover:text-emerald-400 transition-colors line-clamp-2 leading-snug">
-            {product.title}
+            <a
+              href={`/product/${product.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                onViewDetails(product);
+              }}
+              className="hover:underline focus:outline-none"
+            >
+              {product.title}
+            </a>
           </h3>
 
           {/* Star Rating */}

@@ -114,7 +114,7 @@ export interface ShopOrder {
   estimatedDelivery: string;
 }
 
-export type PageView = 'home' | 'shop' | 'about' | 'contact' | 'blog';
+export type PageView = 'home' | 'shop' | 'about' | 'contact' | 'blog' | 'keywords';
 
 export interface BlogPost {
   id: string;

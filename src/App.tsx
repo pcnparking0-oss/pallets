@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Currency, Product, CartItem, ShopOrder, ProductVariant, PageView } from './types';
 import { PRODUCTS } from './data/products';
+import { CATEGORIES } from './data/categories';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { CategoryGrid } from './components/CategoryGrid';
@@ -23,7 +24,10 @@ import { HomeBlogSection } from './components/HomeBlogSection';
 import { HomeFAQSection } from './components/HomeFAQSection';
 import { Language } from './utils/translations';
 import { CheckCircle2, ShoppingBag } from 'lucide-react';
-import { MobileBottomNav } from './components/MobileBottomNav';
+import { MobileMenuDrawer } from './components/MobileMenuDrawer';
+import { computeSeoMetadata, applySeoMetadata } from './utils/seo';
+import { KeywordsDirectoryView } from './components/KeywordsDirectoryView';
+
 
 export default function App() {
   // Navigation & View
@@ -31,13 +35,95 @@ export default function App() {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleNavigateView = (view: PageView) => {
+  // Product Detail Modal State
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+
+  // Initialize Route from URL Path on mount
+  useEffect(() => {
+    const parsePath = (path: string) => {
+      const cleanPath = path.replace(/\/$/, '') || '/';
+      
+      if (cleanPath === '/' || cleanPath === '') {
+        setCurrentView('home');
+        setSelectedCategoryId(null);
+        setIsDetailModalOpen(false);
+      } else if (cleanPath === '/shop') {
+        setCurrentView('shop');
+        setSelectedCategoryId(null);
+        setIsDetailModalOpen(false);
+      } else if (cleanPath.startsWith('/shop/')) {
+        const catSlug = cleanPath.replace('/shop/', '');
+        const foundCategory = CATEGORIES.find(c => c.slug === catSlug || c.id === catSlug);
+        setCurrentView('shop');
+        setSelectedCategoryId(foundCategory ? foundCategory.id : catSlug);
+        setIsDetailModalOpen(false);
+      } else if (cleanPath.startsWith('/product/')) {
+        const prodId = cleanPath.replace('/product/', '');
+        const foundProd = PRODUCTS.find(p => p.id === prodId);
+        if (foundProd) {
+          setSelectedProduct(foundProd);
+          setIsDetailModalOpen(true);
+        }
+      } else if (cleanPath === '/about') {
+        setCurrentView('about');
+        setIsDetailModalOpen(false);
+      } else if (cleanPath === '/contact') {
+        setCurrentView('contact');
+        setIsDetailModalOpen(false);
+      } else if (cleanPath.startsWith('/blog')) {
+        setCurrentView('blog');
+        setIsDetailModalOpen(false);
+      } else if (cleanPath === '/keywords' || cleanPath === '/keyword-index') {
+        setCurrentView('keywords');
+        setIsDetailModalOpen(false);
+      }
+    };
+
+
+    parsePath(window.location.pathname);
+
+    const handlePopState = () => {
+      parsePath(window.location.pathname);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Update Dynamic SEO Metadata whenever route / modal changes
+  useEffect(() => {
+    const meta = computeSeoMetadata(
+      currentView,
+      selectedCategoryId,
+      selectedProduct,
+      isDetailModalOpen
+    );
+    applySeoMetadata(meta);
+  }, [currentView, selectedCategoryId, selectedProduct, isDetailModalOpen]);
+
+  const handleNavigateView = useCallback((view: PageView, pushHistory = true) => {
     if (view === 'home') {
       setSelectedCategoryId(null);
     }
     setCurrentView(view);
+    setIsDetailModalOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+
+    if (pushHistory) {
+      let targetUrl = '/';
+      if (view === 'shop') targetUrl = selectedCategoryId ? `/shop/${selectedCategoryId}` : '/shop';
+      else if (view === 'about') targetUrl = '/about';
+      else if (view === 'contact') targetUrl = '/contact';
+      else if (view === 'blog') targetUrl = '/blog';
+      else if (view === 'keywords') targetUrl = '/keywords';
+
+
+      if (window.location.pathname !== targetUrl) {
+        window.history.pushState(null, '', targetUrl);
+      }
+    }
+  }, [selectedCategoryId]);
 
   // Global Currency State (EUR / GBP)
   const [currency, setCurrency] = useState<Currency>('EUR');
@@ -58,10 +144,6 @@ export default function App() {
     };
     showToast(`Language switched to ${langNames[lang]}`);
   };
-
-  // Product Detail Modal State
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
   // Shopping Cart State
   const [cartItems, setCartItems] = useState<CartItem[]>([
@@ -233,6 +315,23 @@ export default function App() {
   const handleViewProduct = (product: Product) => {
     setSelectedProduct(product);
     setIsDetailModalOpen(true);
+    const targetUrl = `/product/${product.id}`;
+    if (window.location.pathname !== targetUrl) {
+      window.history.pushState(null, '', targetUrl);
+    }
+  };
+
+  const handleCloseDetailModal = () => {
+    setIsDetailModalOpen(false);
+    let targetUrl = '/';
+    if (currentView === 'shop') {
+      targetUrl = selectedCategoryId ? `/shop/${selectedCategoryId}` : '/shop';
+    } else if (currentView === 'about') targetUrl = '/about';
+    else if (currentView === 'contact') targetUrl = '/contact';
+    else if (currentView === 'blog') targetUrl = '/blog';
+    if (window.location.pathname !== targetUrl) {
+      window.history.pushState(null, '', targetUrl);
+    }
   };
 
   // Category navigation
@@ -242,7 +341,14 @@ export default function App() {
     } else {
       setSelectedCategoryId(categoryId);
     }
-    handleNavigateView('shop');
+    const targetCat = categoryId === 'all' ? null : categoryId;
+    setCurrentView('shop');
+    setIsDetailModalOpen(false);
+    const targetUrl = targetCat ? `/shop/${targetCat}` : '/shop';
+    if (window.location.pathname !== targetUrl) {
+      window.history.pushState(null, '', targetUrl);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Order completion
@@ -403,9 +509,17 @@ export default function App() {
             onSelectCategory={handleSelectCategory}
           />
         )}
+
+        {currentView === 'keywords' && (
+          <KeywordsDirectoryView
+            onNavigateView={handleNavigateView}
+            onSelectCategory={handleSelectCategory}
+          />
+        )}
       </main>
 
       {/* Store Footer */}
+
       <Footer
         onSelectCategory={handleSelectCategory}
         onOpenTrackOrder={() => setIsTrackOrderOpen(true)}
@@ -418,7 +532,7 @@ export default function App() {
       <ProductDetailModal
         product={selectedProduct}
         isOpen={isDetailModalOpen}
-        onClose={() => setIsDetailModalOpen(false)}
+        onClose={handleCloseDetailModal}
         currency={currency}
         isWishlisted={selectedProduct ? wishlistIds.includes(selectedProduct.id) : false}
         onToggleWishlist={handleToggleWishlist}
@@ -485,27 +599,33 @@ export default function App() {
         currency={currency}
       />
 
-      {/* Mobile Bottom Navigation Bar (Always visible on mobile devices < 768px) */}
-      <MobileBottomNav
+      {/* Mobile Slide-Out Navigation Drawer & Backdrop (Mounted via Portal at root body level) */}
+      <MobileMenuDrawer
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
         currentView={currentView}
         onNavigateView={(view) => {
           setIsMobileMenuOpen(false);
           handleNavigateView(view);
         }}
-        cartItems={cartItems}
-        wishlistIds={wishlistIds}
-        onOpenCart={() => {
-          setIsMobileMenuOpen(false);
-          setIsCartOpen(true);
-        }}
+        language={language}
+        onSelectLanguage={handleSelectLanguage}
+        currency={currency}
+        onToggleCurrency={() => setCurrency(prev => prev === 'EUR' ? 'GBP' : 'EUR')}
         onOpenWishlist={() => {
           setIsMobileMenuOpen(false);
           setIsWishlistOpen(true);
         }}
-        currency={currency}
-        language={language}
-        isMenuOpen={isMobileMenuOpen}
-        onToggleMenu={() => setIsMobileMenuOpen(prev => !prev)}
+        onOpenTrackOrder={() => {
+          setIsMobileMenuOpen(false);
+          setIsTrackOrderOpen(true);
+        }}
+        onSelectCategory={(catId) => {
+          setIsMobileMenuOpen(false);
+          handleSelectCategory(catId);
+        }}
+        selectedCategoryId={selectedCategoryId}
+        wishlistIds={wishlistIds}
       />
 
     </div>
