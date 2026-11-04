@@ -33,7 +33,6 @@ export interface Product {
   price: number; // Liquidation outlet price
   originalMSRP: number;
   unboxedTotalWorth?: number; // Total verified retail worth after unboxing the pallet
-  resaleValue?: number; // Estimated second-hand / marketplace resale value when customer resells
   productQuality?: string; // Quality rating & certification description
   discountPercentage: number;
   rating: number;

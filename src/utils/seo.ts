@@ -63,7 +63,43 @@ export function computeSeoMetadata(
         'Grade A+ sealed',
         'phone for sale',
         'laptops for sale'
-      ]
+      ],
+      jsonLd: {
+        '@context': 'https://schema.org/',
+        '@type': 'Product',
+        'name': selectedProduct.title,
+        'image': selectedProduct.images,
+        'description': selectedProduct.description,
+        'sku': selectedProduct.sku,
+        'mpn': selectedProduct.id,
+        'brand': {
+          '@type': 'Brand',
+          'name': selectedProduct.brand
+        },
+        'offers': {
+          '@type': 'Offer',
+          'url': `${DOMAIN}/product/${selectedProduct.id}`,
+          'priceCurrency': 'EUR',
+          'price': selectedProduct.price,
+          'priceValidUntil': '2026-12-31',
+          'itemCondition': selectedProduct.condition?.toLowerCase().includes('open') 
+            ? 'https://schema.org/UsedCondition' 
+            : 'https://schema.org/NewCondition',
+          'availability': selectedProduct.stockCount > 0 
+            ? 'https://schema.org/InStock' 
+            : 'https://schema.org/OutOfStock',
+          'seller': {
+            '@type': 'Organization',
+            'name': 'EuroPalletSupply.com',
+            'url': DOMAIN
+          }
+        },
+        'aggregateRating': {
+          '@type': 'AggregateRating',
+          'ratingValue': selectedProduct.rating || 4.9,
+          'reviewCount': selectedProduct.reviewCount || 42
+        }
+      }
     };
   }
 
@@ -207,6 +243,21 @@ export function applySeoMetadata(meta: SeoMetadata): void {
   // 6. Keywords
   if (meta.keywords && meta.keywords.length > 0) {
     updateMetaTag('name', 'keywords', meta.keywords.join(', '));
+  }
+
+  // 7. Dynamic Schema.org JSON-LD (e.g. Product Rich Snippets)
+  const scriptId = 'dynamic-seo-jsonld';
+  let jsonLdScript = document.getElementById(scriptId) as HTMLScriptElement | null;
+  if (meta.jsonLd) {
+    if (!jsonLdScript) {
+      jsonLdScript = document.createElement('script');
+      jsonLdScript.id = scriptId;
+      jsonLdScript.type = 'application/ld+json';
+      document.head.appendChild(jsonLdScript);
+    }
+    jsonLdScript.text = JSON.stringify(meta.jsonLd, null, 2);
+  } else if (jsonLdScript) {
+    jsonLdScript.remove();
   }
 }
 

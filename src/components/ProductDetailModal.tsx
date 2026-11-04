@@ -17,7 +17,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Layers,
-  TrendingUp
+  FileText
 } from 'lucide-react';
 import { Product, Currency, ProductVariant } from '../types';
 import { formatCurrency } from '../utils/formatters';
@@ -31,6 +31,7 @@ interface ProductDetailModalProps {
   onToggleWishlist: (productId: string) => void;
   onAddToCart: (product: Product, quantity: number, variant?: ProductVariant) => void;
   onBuyNow: (product: Product, quantity: number, variant?: ProductVariant) => void;
+  onRequestQuote?: (product: Product) => void;
 }
 
 export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
@@ -41,7 +42,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   isWishlisted,
   onToggleWishlist,
   onAddToCart,
-  onBuyNow
+  onBuyNow,
+  onRequestQuote
 }) => {
   if (!isOpen || !product) return null;
 
@@ -54,9 +56,6 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [isCopied, setIsCopied] = useState(false);
 
   const savingsEur = product.originalMSRP - product.price;
-  const resaleValueEur = product.resaleValue || Math.round((product.unboxedTotalWorth || product.originalMSRP) * 0.92);
-  const customerResaleProfitEur = Math.max(0, resaleValueEur - product.price);
-  const resaleRoiPercent = Math.round((customerResaleProfitEur / product.price) * 100);
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -284,7 +283,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 </div>
               </div>
 
-              {/* Pallet Unboxing Valuation & Certified Quality Box */}
+              {/* Certified Quality & Lot Authentication Box */}
               <div className="bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 border border-emerald-500/30 rounded-xl p-3.5 mt-2.5 shadow-sm">
                 <div className="flex items-center justify-between border-b border-slate-800/80 pb-2 mb-2.5">
                   <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400">
@@ -295,77 +294,28 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     CERTIFIED UNOPENED
                   </span>
                 </div>
-                <div className="grid grid-cols-2 gap-3 text-xs">
+                <div className="flex items-center justify-between text-xs">
                   <div>
                     <span className="text-slate-400 text-[10px] uppercase font-semibold block tracking-wider">
-                      Total Worth After Unboxing
+                      Batch Verification
                     </span>
-                    <span className="font-mono font-black text-amber-300 text-base sm:text-lg">
-                      {formatCurrency(product.unboxedTotalWorth || product.originalMSRP, currency)}
+                    <span className="font-mono font-bold text-emerald-400 text-xs sm:text-sm block">
+                      Authentic Master Lot
                     </span>
-                    <span className="text-[10px] text-slate-500 block">Verified EU Retail MSRP</span>
+                    <span className="text-[10px] text-slate-500 block">Official European Retail Stock</span>
                   </div>
-                  <div className="border-l border-slate-800/80 pl-3">
+                  <div className="text-right">
                     <span className="text-slate-400 text-[10px] uppercase font-semibold block tracking-wider">
-                      Unboxed Resale Margin
+                      Stock Authentication
                     </span>
-                    <span className="font-mono font-black text-emerald-400 text-base sm:text-lg">
-                      +{formatCurrency(savingsEur, currency)}
+                    <span className="font-mono font-bold text-emerald-400 text-xs sm:text-sm block">
+                      OEM Factory Sealed
                     </span>
-                    <span className="text-[10px] text-emerald-400/80 block font-semibold">
-                      +{product.discountPercentage}% Unboxed Equity
-                    </span>
+                    <span className="text-[10px] text-slate-500 block">Original Manufacturer Packaging</span>
                   </div>
                 </div>
               </div>
 
-              {/* Customer Resale Value When Resold */}
-              <div className="bg-gradient-to-br from-slate-950 via-teal-950/20 to-slate-950 border border-teal-500/40 rounded-xl p-3.5 mt-2.5 shadow-sm space-y-2">
-                <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-teal-300">
-                    <TrendingUp className="w-4 h-4 text-teal-400 shrink-0" />
-                    <span>Customer Resale Valuation</span>
-                  </div>
-                  <span className="text-[10px] font-mono font-bold bg-teal-500/15 text-teal-300 px-2 py-0.5 rounded border border-teal-500/30">
-                    ESTIMATED RESALE RETURN
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-3 gap-2 py-1 text-center">
-                  <div className="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
-                    <span className="text-slate-400 text-[10px] block font-medium">When You Resell</span>
-                    <span className="font-mono font-black text-teal-300 text-sm sm:text-base">
-                      {formatCurrency(resaleValueEur, currency)}
-                    </span>
-                    <span className="text-[9px] text-slate-500 block">Est. Resale Price</span>
-                  </div>
-
-                  <div className="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
-                    <span className="text-slate-400 text-[10px] block font-medium">Net Resale Profit</span>
-                    <span className="font-mono font-black text-emerald-400 text-sm sm:text-base">
-                      +{formatCurrency(customerResaleProfitEur, currency)}
-                    </span>
-                    <span className="text-[9px] text-emerald-400/80 block font-semibold">Your Pocket Gain</span>
-                  </div>
-
-                  <div className="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
-                    <span className="text-slate-400 text-[10px] block font-medium">Resale ROI</span>
-                    <span className="font-mono font-black text-emerald-400 text-sm sm:text-base">
-                      +{resaleRoiPercent}%
-                    </span>
-                    <span className="text-[9px] text-slate-500 block">Return on Cost</span>
-                  </div>
-                </div>
-
-                <div className="pt-1 flex flex-wrap items-center justify-between gap-1 text-[10px] text-slate-400">
-                  <span>
-                    Resale marketplaces: <strong className="text-slate-300">eBay EU • Marktplaats • Amazon • Vinted</strong>
-                  </span>
-                  <span className="text-teal-400 font-medium">
-                    100% Sealed Factory Condition
-                  </span>
-                </div>
-              </div>
 
               {/* Variant Selector (if available) */}
               {product.variants && product.variants.length > 0 && (
@@ -429,10 +379,20 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
               <button
                 onClick={() => onBuyNow(product, quantity, selectedVariant)}
-                className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm border border-slate-700 flex items-center justify-center gap-2 transition-colors"
+                className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm border border-slate-700 flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
                 <Zap className="w-4 h-4 text-emerald-400" />
                 <span>Buy Now with 1-Click Checkout</span>
+              </button>
+
+              {/* B2B Manifest & Freight Quote Lead CTA */}
+              <button
+                type="button"
+                onClick={() => onRequestQuote && onRequestQuote(product)}
+                className="w-full py-2.5 px-4 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-emerald-400 hover:text-emerald-300 font-bold text-xs border border-emerald-500/40 hover:border-emerald-400 flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm"
+              >
+                <FileText className="w-4 h-4" />
+                <span>Request Itemized Manifest & Custom Freight Quote (B2B)</span>
               </button>
             </div>
 
@@ -501,7 +461,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           <div className="pt-4 text-xs sm:text-sm text-slate-300">
             {activeTab === 'features' && (
               <div className="space-y-4">
-                {/* Visual Unboxing Worth & Quality Box */}
+                {/* Visual Quality & Sourcing Box */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 rounded-xl bg-slate-900/90 border border-slate-800">
                   <div className="flex items-start gap-2.5">
                     <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0">
@@ -521,18 +481,18 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   </div>
 
                   <div className="flex items-start gap-2.5">
-                    <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 shrink-0">
+                    <div className="p-2 rounded-lg bg-teal-500/10 border border-teal-500/20 text-teal-400 shrink-0">
                       <Package className="w-4 h-4" />
                     </div>
                     <div>
                       <span className="text-[10px] uppercase tracking-wider font-bold text-slate-400 block">
-                        Total Worth After Unboxing
+                        Manifest Verification
                       </span>
-                      <span className="text-xs font-mono font-bold text-amber-300">
-                        {formatCurrency(product.unboxedTotalWorth || product.originalMSRP, currency)} Retail Worth
+                      <span className="text-xs font-bold text-teal-300">
+                        Direct Retail Overstock
                       </span>
                       <p className="text-[11px] text-slate-400 mt-0.5 leading-snug">
-                        Instant profit / equity surplus of <strong className="text-emerald-400">+{formatCurrency(savingsEur, currency)} ({product.discountPercentage}%)</strong> compared to the {formatCurrency(product.price, currency)} pallet lot price.
+                        Sourced directly from authorized European retailers and central distribution hubs with complete manifest tracking.
                       </p>
                     </div>
                   </div>
@@ -565,15 +525,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             {activeTab === 'specs' && (
               <div className="space-y-3 text-xs">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <div className="bg-slate-900 p-2.5 rounded-lg border border-teal-500/30 flex justify-between">
-                    <span className="text-teal-300 font-medium">Customer Resale Value</span>
-                    <span className="font-mono font-bold text-teal-300">{formatCurrency(resaleValueEur, currency)}</span>
-                  </div>
-                  <div className="bg-slate-900 p-2.5 rounded-lg border border-emerald-500/30 flex justify-between">
-                    <span className="text-emerald-300 font-medium">Customer Resale Margin</span>
-                    <span className="font-mono font-bold text-emerald-400">+{formatCurrency(customerResaleProfitEur, currency)} (+{resaleRoiPercent}%)</span>
-                  </div>
-                  {Object.entries(product.specifications).map(([key, val]) => (
+                  {Object.entries(product.specifications)
+                    .filter(([key]) => key !== 'Unboxed Resale Margin' && key !== 'Total Worth After Unboxing' && !key.toLowerCase().includes('resale'))
+                    .map(([key, val]) => (
                     <div key={key} className="bg-slate-900 p-2.5 rounded-lg border border-slate-800 flex justify-between">
                       <span className="text-slate-400">{key}</span>
                       <span className="font-semibold text-white">{val}</span>

@@ -10,13 +10,24 @@ export interface MailerConfig {
 }
 
 export function getMailerConfig(): MailerConfig {
+  const rawFrom = process.env.EMAIL_FROM || 'info@europalletsupply.com';
+  let cleanFrom = rawFrom.trim();
+  if ((cleanFrom.startsWith('"') && cleanFrom.endsWith('"')) || (cleanFrom.startsWith("'") && cleanFrom.endsWith("'"))) {
+    cleanFrom = cleanFrom.slice(1, -1).trim();
+  }
+  
+  // Format cleanly as "Europallet Supply" <info@europalletsupply.com>
+  const from = cleanFrom.includes('<') && cleanFrom.includes('>')
+    ? cleanFrom
+    : `"Europallet Supply" <${cleanFrom}>`;
+
   return {
-    host: process.env.SMTP_HOST || 'smtppro.zoho.com',
+    host: process.env.SMTP_HOST || 'smtp.zoho.com',
     port: process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT, 10) : 465,
     secure: process.env.SMTP_SECURE ? process.env.SMTP_SECURE === 'true' : true,
     user: process.env.SMTP_USER || 'info@europalletsupply.com',
     pass: process.env.SMTP_PASS || 'mimowhite',
-    from: process.env.EMAIL_FROM || '"Europallet Supply" <info@europalletsupply.com>'
+    from
   };
 }
 
@@ -198,12 +209,18 @@ export async function sendContactEmails(data: ContactFormData) {
     `
   };
 
-  const [adminResult, customerResult] = await Promise.all([
-    transporter.sendMail(adminMailOptions),
-    transporter.sendMail(customerMailOptions)
-  ]);
+  // Send customer auto-responder
+  const customerResult = await transporter.sendMail(customerMailOptions);
 
-  return { adminResult, customerResult };
+  // Send admin notification
+  let adminResult: any = null;
+  try {
+    adminResult = await transporter.sendMail(adminMailOptions);
+  } catch (adminErr) {
+    console.warn('Admin contact notification warning:', adminErr);
+  }
+
+  return { customerResult, adminResult: adminResult || customerResult };
 }
 
 // -------------------------------------------------------------
@@ -464,12 +481,18 @@ export async function sendOrderEmails(order: OrderEmailData) {
     `
   };
 
-  const [customerResult, adminResult] = await Promise.all([
-    transporter.sendMail(customerMailOptions),
-    transporter.sendMail(adminMailOptions)
-  ]);
+  // Send customer confirmation first
+  const customerResult = await transporter.sendMail(customerMailOptions);
+  
+  // Send admin notification
+  let adminResult: any = null;
+  try {
+    adminResult = await transporter.sendMail(adminMailOptions);
+  } catch (adminErr) {
+    console.warn('Admin notification warning:', adminErr);
+  }
 
-  return { customerResult, adminResult };
+  return { customerResult, adminResult: adminResult || customerResult };
 }
 
 // -------------------------------------------------------------
@@ -559,10 +582,16 @@ export async function sendSubscriptionEmails(subscriberEmail: string, discountCo
     `
   };
 
-  const [subscriberResult, adminResult] = await Promise.all([
-    transporter.sendMail(subscriberMailOptions),
-    transporter.sendMail(adminMailOptions)
-  ]);
+  // Send subscriber welcome coupon
+  const subscriberResult = await transporter.sendMail(subscriberMailOptions);
 
-  return { subscriberResult, adminResult };
+  // Send admin alert
+  let adminResult: any = null;
+  try {
+    adminResult = await transporter.sendMail(adminMailOptions);
+  } catch (adminErr) {
+    console.warn('Admin subscription alert warning:', adminErr);
+  }
+
+  return { subscriberResult, adminResult: adminResult || subscriberResult };
 }

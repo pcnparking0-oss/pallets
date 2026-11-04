@@ -9,9 +9,9 @@ export interface SEOHeadProps {
   schemaData?: Record<string, any> | Record<string, any>[];
 }
 
-const BASE_URL = 'https://europalletliquidation.eu';
-const DEFAULT_TITLE = 'EuroPalletLiquidation.eu - Online Liquidation & Outlet Shop';
-const DEFAULT_DESC = "Europe's premier online liquidation & clearance outlet shop. Shop brand overstock, electronics, home goods, and tools at up to 80% off retail with fast EU delivery.";
+const BASE_URL = 'https://europalletsupply.com';
+const DEFAULT_TITLE = "EuroPalletSupply.com - Europe's #1 Pallet Liquidation & Wholesale Overstock Hub";
+const DEFAULT_DESC = "Official European pallet liquidation & wholesale overstock hub. Source verified Amazon returns, laptops, phones, electronics, tools & appliances at 60-85% below MSRP. Fast 24-48h EU freight dispatch from Venlo.";
 const DEFAULT_IMAGE = `${BASE_URL}/favicon.svg`;
 
 export const SEOHead: React.FC<SEOHeadProps> = ({

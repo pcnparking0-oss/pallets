@@ -27,7 +27,8 @@ import { CheckCircle2, ShoppingBag } from 'lucide-react';
 import { MobileMenuDrawer } from './components/MobileMenuDrawer';
 import { computeSeoMetadata, applySeoMetadata } from './utils/seo';
 import { KeywordsDirectoryView } from './components/KeywordsDirectoryView';
-
+import { LeadInquiryModal } from './components/LeadInquiryModal';
+import { QuickLeadBadge } from './components/QuickLeadBadge';
 
 export default function App() {
   // Navigation & View
@@ -38,6 +39,15 @@ export default function App() {
   // Product Detail Modal State
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+
+  // B2B Wholesale & Manifest Lead Quote Modal
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const [quoteProduct, setQuoteProduct] = useState<Product | null>(null);
+
+  const handleOpenQuoteModal = (product?: Product | null) => {
+    setQuoteProduct(product || null);
+    setIsQuoteModalOpen(true);
+  };
 
   // Initialize Route from URL Path on mount
   useEffect(() => {
@@ -538,6 +548,7 @@ export default function App() {
         onToggleWishlist={handleToggleWishlist}
         onAddToCart={handleAddToCart}
         onBuyNow={handleBuyNow}
+        onRequestQuote={(prod) => handleOpenQuoteModal(prod)}
       />
 
       {/* Shopping Cart Drawer */}
@@ -626,6 +637,17 @@ export default function App() {
         }}
         selectedCategoryId={selectedCategoryId}
         wishlistIds={wishlistIds}
+      />
+
+      {/* Floating B2B Wholesale Manifest & Quote Lead Trigger */}
+      <QuickLeadBadge onOpenQuoteModal={() => handleOpenQuoteModal(null)} />
+
+      {/* B2B Pallet Manifest & Freight Quote Modal */}
+      <LeadInquiryModal
+        isOpen={isQuoteModalOpen}
+        onClose={() => setIsQuoteModalOpen(false)}
+        product={quoteProduct}
+        currency={currency}
       />
 
     </div>

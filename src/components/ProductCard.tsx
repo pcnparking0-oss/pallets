@@ -196,16 +196,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <span className="text-[10px] text-slate-500">({product.reviewCount})</span>
           </div>
 
-          {/* Product Quality & Unboxed Valuation Banner */}
+          {/* Product Quality & Batch Verification Banner */}
           <div className="mt-2.5 bg-slate-950/80 border border-slate-800/90 rounded-lg px-2.5 py-1.5 flex items-center justify-between text-[11px]">
             <div className="flex items-center gap-1 text-emerald-400">
               <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
               <span className="font-semibold text-[10px] tracking-tight">Grade A+ Sealed</span>
             </div>
             <div className="flex items-center gap-1 text-slate-300">
-              <span className="text-[10px] text-slate-400">Unboxed Worth:</span>
-              <span className="font-mono font-bold text-amber-300 text-[11px]">
-                {formatCurrency(product.unboxedTotalWorth || product.originalMSRP, currency)}
+              <span className="text-[10px] text-slate-400">Condition:</span>
+              <span className="font-mono font-semibold text-emerald-400 text-[11px]">
+                100% Unopened
               </span>
             </div>
           </div>
