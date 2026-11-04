@@ -6,7 +6,8 @@ import {
   Check, 
   Eye, 
   ShieldCheck, 
-  Truck
+  Truck,
+  Zap
 } from 'lucide-react';
 import { Product, Currency } from '../types';
 import { formatCurrency } from '../utils/formatters';
@@ -18,6 +19,7 @@ interface ProductCardProps {
   onToggleWishlist: (productId: string) => void;
   onAddToCart: (product: Product) => void;
   onViewDetails: (product: Product) => void;
+  onBuyNow?: (product: Product) => void;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -26,7 +28,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   isWishlisted,
   onToggleWishlist,
   onAddToCart,
-  onViewDetails
+  onViewDetails,
+  onBuyNow
 }) => {
   const [isAdded, setIsAdded] = useState(false);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
@@ -233,27 +236,48 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </span>
           </div>
 
-          {/* Quick Action Button */}
-          <button
-            onClick={handleAddClick}
-            className={`w-full min-h-[44px] py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-              isAdded
-                ? 'bg-emerald-600 text-white'
-                : 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20 active:scale-95'
-            }`}
-          >
-            {isAdded ? (
-              <>
-                <Check className="w-4 h-4" />
-                <span>Added to Cart!</span>
-              </>
-            ) : (
-              <>
-                <ShoppingCart className="w-4 h-4" />
-                <span>Add to Cart</span>
-              </>
-            )}
-          </button>
+          {/* Quick Dual Action Buttons for Easy Ordering */}
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={handleAddClick}
+              className={`min-h-[42px] py-2 px-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                isAdded
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/80 hover:text-white active:scale-95'
+              }`}
+              title="Add to shopping cart"
+            >
+              {isAdded ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  <span className="truncate">Added!</span>
+                </>
+              ) : (
+                <>
+                  <ShoppingCart className="w-3.5 h-3.5 text-slate-300" />
+                  <span className="truncate">Add to Cart</span>
+                </>
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onBuyNow) {
+                  onBuyNow(product);
+                } else {
+                  onAddToCart(product);
+                }
+              }}
+              className="min-h-[42px] py-2 px-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black text-xs flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/20 transition-all cursor-pointer"
+              title="Place order immediately with 1-click checkout"
+            >
+              <Zap className="w-3.5 h-3.5 fill-slate-950" />
+              <span className="truncate">Order Now</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

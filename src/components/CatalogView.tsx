@@ -26,6 +26,7 @@ interface CatalogViewProps {
   onToggleWishlist: (productId: string) => void;
   onAddToCart: (product: Product) => void;
   onViewDetails: (product: Product) => void;
+  onBuyNow?: (product: Product) => void;
 }
 
 export const CatalogView: React.FC<CatalogViewProps> = ({
@@ -35,7 +36,8 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
   wishlistIds,
   onToggleWishlist,
   onAddToCart,
-  onViewDetails
+  onViewDetails,
+  onBuyNow
 }) => {
   // Filter states
   const [searchQuery, setSearchQuery] = useState('');
@@ -586,6 +588,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
                   onToggleWishlist={onToggleWishlist}
                   onAddToCart={onAddToCart}
                   onViewDetails={onViewDetails}
+                  onBuyNow={onBuyNow}
                 />
               ))}
             </div>

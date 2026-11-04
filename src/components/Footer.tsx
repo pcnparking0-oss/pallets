@@ -370,6 +370,18 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a
+                  href="/shipping"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigateView?.('shipping-returns');
+                  }}
+                  className="hover:text-emerald-400 transition-colors block font-medium text-emerald-400"
+                >
+                  Shipping & Returns Policy
+                </a>
+              </li>
+              <li>
+                <a
                   href="/terms"
                   onClick={(e) => {
                     e.preventDefault();
@@ -506,6 +518,8 @@ export const Footer: React.FC<FooterProps> = ({
             <a href="/contact" onClick={(e) => { e.preventDefault(); onNavigateView?.('contact'); }} className="hover:text-slate-300">Contact</a>
             <span>•</span>
             <a href="/faq" onClick={(e) => { e.preventDefault(); onNavigateView?.('faq'); }} className="hover:text-slate-300">FAQs</a>
+            <span>•</span>
+            <a href="/shipping" onClick={(e) => { e.preventDefault(); onNavigateView?.('shipping-returns'); }} className="hover:text-slate-300">Shipping & Returns</a>
             <span>•</span>
             <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateView?.('terms'); }} className="hover:text-slate-300">Terms & Conditions</a>
             <span>•</span>

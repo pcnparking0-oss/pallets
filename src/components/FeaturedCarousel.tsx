@@ -11,6 +11,7 @@ interface FeaturedCarouselProps {
   onAddToCart: (product: Product) => void;
   onViewDetails: (product: Product) => void;
   onViewAll: () => void;
+  onBuyNow?: (product: Product) => void;
 }
 
 export const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({
@@ -19,7 +20,8 @@ export const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({
   onToggleWishlist,
   onAddToCart,
   onViewDetails,
-  onViewAll
+  onViewAll,
+  onBuyNow
 }) => {
   const trendingDeals = PRODUCTS.filter(p => p.featured).slice(0, 6);
 
@@ -57,6 +59,7 @@ export const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({
               onToggleWishlist={onToggleWishlist}
               onAddToCart={onAddToCart}
               onViewDetails={onViewDetails}
+              onBuyNow={onBuyNow}
             />
           ))}
         </div>

@@ -285,6 +285,28 @@ export const MobileMenuDrawer: React.FC<MobileMenuDrawerProps> = ({
                 </div>
               </a>
 
+              {/* Shipping & Returns */}
+              <a
+                id="drawer-nav-shipping"
+                href="/shipping"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigateView('shipping-returns');
+                  onClose();
+                }}
+                className={`w-full p-3 rounded-xl text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${
+                  currentView === 'shipping-returns'
+                    ? 'bg-emerald-500 text-slate-950 shadow-sm'
+                    : 'bg-slate-900/60 text-slate-200 hover:bg-slate-800 border border-slate-850'
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <Truck className="w-4 h-4 text-emerald-400" />
+                  <span>{mockTranslate('shippingReturns', language)}</span>
+                </div>
+                <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded font-mono">24-48h Freight</span>
+              </a>
+
               {/* FAQs */}
               <a
                 id="drawer-nav-faq"

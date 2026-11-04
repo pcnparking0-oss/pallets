@@ -227,9 +227,11 @@ export const Header: React.FC<HeaderProps> = ({
               id="header-cart-btn"
               onClick={onOpenCart}
               className="relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer shrink-0"
+              title="View shopping cart and checkout"
             >
               <ShoppingBag className="w-4 h-4" />
-              <span className="hidden sm:inline">{mockTranslate('myCart', language)}</span>
+              <span className="inline sm:hidden font-black">Cart</span>
+              <span className="hidden sm:inline font-bold">{mockTranslate('myCart', language)}</span>
               <span className="bg-slate-950 text-emerald-400 text-[11px] font-mono font-black px-1.5 py-0.5 rounded-full">
                 {totalCartCount}
               </span>
@@ -358,6 +360,24 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <BookOpen className="w-3.5 h-3.5" />
               <span>{mockTranslate('blog', language)}</span>
+            </a>
+
+            {/* Shipping & Returns */}
+            <a
+              id="nav-menu-shipping"
+              href="/shipping"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigateView('shipping-returns');
+              }}
+              className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer ${
+                currentView === 'shipping-returns'
+                  ? 'bg-emerald-500 text-slate-950 shadow-sm'
+                  : 'bg-slate-900 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700'
+              }`}
+            >
+              <Truck className="w-3.5 h-3.5" />
+              <span>{mockTranslate('shippingReturns', language)}</span>
             </a>
 
             {/* FAQs */}

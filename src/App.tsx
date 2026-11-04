@@ -23,7 +23,7 @@ import { HomeTrustpilotReviews } from './components/HomeTrustpilotReviews';
 import { HomeBlogSection } from './components/HomeBlogSection';
 import { HomeFAQSection } from './components/HomeFAQSection';
 import { Language } from './utils/translations';
-import { CheckCircle2, ShoppingBag } from 'lucide-react';
+import { CheckCircle2, ShoppingBag, ArrowRight } from 'lucide-react';
 import { MobileMenuDrawer } from './components/MobileMenuDrawer';
 import { computeSeoMetadata, applySeoMetadata } from './utils/seo';
 import { KeywordsDirectoryView } from './components/KeywordsDirectoryView';
@@ -32,6 +32,8 @@ import { QuickLeadBadge } from './components/QuickLeadBadge';
 import { TermsView } from './components/TermsView';
 import { PrivacyPolicyView } from './components/PrivacyPolicyView';
 import { FAQView } from './components/FAQView';
+import { ShippingReturnsView } from './components/ShippingReturnsView';
+import { formatCurrency } from './utils/formatters';
 
 export default function App() {
   // Navigation & View
@@ -99,6 +101,9 @@ export default function App() {
       } else if (cleanPath === '/faq' || cleanPath === '/faqs') {
         setCurrentView('faq');
         setIsDetailModalOpen(false);
+      } else if (cleanPath === '/shipping' || cleanPath === '/shipping-returns' || cleanPath === '/returns' || cleanPath === '/delivery') {
+        setCurrentView('shipping-returns');
+        setIsDetailModalOpen(false);
       }
     };
 
@@ -142,6 +147,7 @@ export default function App() {
       else if (view === 'terms') targetUrl = '/terms';
       else if (view === 'privacy') targetUrl = '/privacy';
       else if (view === 'faq') targetUrl = '/faq';
+      else if (view === 'shipping-returns') targetUrl = '/shipping';
 
 
       if (window.location.pathname !== targetUrl) {
@@ -269,7 +275,7 @@ export default function App() {
   };
 
   // Cart operations
-  const handleAddToCart = (product: Product, quantity = 1, variant?: ProductVariant) => {
+  const handleAddToCart = (product: Product, quantity = 1, variant?: ProductVariant, openCart = true) => {
     setCartItems(prev => {
       const existing = prev.find(
         item => item.product.id === product.id && item.selectedVariant?.id === variant?.id
@@ -284,6 +290,9 @@ export default function App() {
       return [...prev, { product, quantity, selectedVariant: variant }];
     });
 
+    if (openCart) {
+      setIsCartOpen(true);
+    }
     showToast(`Added ${quantity}x "${product.title}" to your cart.`);
   };
 
@@ -389,11 +398,23 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-slate-950 font-sans">
       
-      {/* Toast Notification */}
+      {/* Toast Notification with Instant Checkout Action */}
       {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 bg-slate-900 border border-emerald-500/50 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs font-semibold animate-in fade-in slide-in-from-bottom-3 duration-200">
+        <div className="fixed bottom-5 right-5 z-50 bg-slate-900 border border-emerald-500/50 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 text-xs font-semibold animate-in fade-in slide-in-from-bottom-3 duration-200">
           <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-          <span>{toastMessage}</span>
+          <span className="max-w-xs truncate">{toastMessage}</span>
+          {cartItems.length > 0 && (
+            <button
+              onClick={() => {
+                setToastMessage(null);
+                setIsCheckoutOpen(true);
+              }}
+              className="ml-1 px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-1 transition-all cursor-pointer shadow-md shadow-emerald-500/20 shrink-0"
+            >
+              <span>Checkout</span>
+              <ArrowRight className="w-3 h-3" />
+            </button>
+          )}
         </div>
       )}
 
@@ -474,6 +495,7 @@ export default function App() {
               wishlistIds={wishlistIds}
               onToggleWishlist={handleToggleWishlist}
               onAddToCart={(p) => handleAddToCart(p, 1)}
+              onBuyNow={(p) => handleBuyNow(p, 1)}
               onViewDetails={handleViewProduct}
               onViewAll={() => handleNavigateView('shop')}
             />
@@ -511,6 +533,7 @@ export default function App() {
             wishlistIds={wishlistIds}
             onToggleWishlist={handleToggleWishlist}
             onAddToCart={(p) => handleAddToCart(p, 1)}
+            onBuyNow={(p) => handleBuyNow(p, 1)}
             onViewDetails={handleViewProduct}
           />
         )}
@@ -558,6 +581,15 @@ export default function App() {
 
         {currentView === 'faq' && (
           <FAQView
+            language={language}
+            onNavigateShop={() => handleNavigateView('shop')}
+            onNavigateContact={() => handleNavigateView('contact')}
+            onOpenTrackOrder={() => setIsTrackOrderOpen(true)}
+          />
+        )}
+
+        {currentView === 'shipping-returns' && (
+          <ShippingReturnsView
             language={language}
             onNavigateShop={() => handleNavigateView('shop')}
             onNavigateContact={() => handleNavigateView('contact')}
@@ -676,6 +708,41 @@ export default function App() {
         selectedCategoryId={selectedCategoryId}
         wishlistIds={wishlistIds}
       />
+
+      {/* Floating Sticky Checkout Bar for Easy Instant Ordering */}
+      {cartItems.length > 0 && !isCheckoutOpen && !isCartOpen && (
+        <div className="fixed bottom-4 left-4 right-4 sm:left-6 sm:right-auto sm:max-w-md z-40 bg-slate-900/95 backdrop-blur-md border border-emerald-500/50 rounded-2xl p-3 shadow-2xl flex items-center justify-between gap-3 animate-in slide-in-from-bottom-3 duration-200">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-9 h-9 rounded-xl bg-emerald-500 text-slate-950 flex items-center justify-center font-black text-xs shrink-0 shadow-md">
+              <ShoppingBag className="w-4 h-4" />
+            </div>
+            <div className="truncate">
+              <p className="text-xs font-bold text-white truncate">
+                {cartItems.reduce((acc, i) => acc + i.quantity, 0)} {cartItems.reduce((acc, i) => acc + i.quantity, 0) === 1 ? 'Pallet Lot' : 'Lots'} in Cart
+              </p>
+              <p className="text-[11px] font-mono font-bold text-emerald-400">
+                {formatCurrency(cartItems.reduce((acc, i) => acc + (i.product.price * i.quantity), 0), currency)} • Free EU Delivery
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="py-2 px-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold transition-colors cursor-pointer"
+            >
+              Cart
+            </button>
+            <button
+              onClick={() => setIsCheckoutOpen(true)}
+              className="py-2 px-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-500/20 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+            >
+              <span>Checkout</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Floating B2B Wholesale Manifest & Quote Lead Trigger */}
       <QuickLeadBadge onOpenQuoteModal={() => handleOpenQuoteModal(null)} />

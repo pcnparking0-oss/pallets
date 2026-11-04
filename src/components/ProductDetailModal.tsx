@@ -17,7 +17,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Layers,
-  FileText
+  FileText,
+  ArrowRight
 } from 'lucide-react';
 import { Product, Currency, ProductVariant } from '../types';
 import { formatCurrency } from '../utils/formatters';
@@ -368,21 +369,24 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </div>
 
             {/* Action Buttons */}
-            <div className="space-y-2 pt-2">
+            <div className="space-y-2.5 pt-2">
               <button
-                onClick={() => onAddToCart(product, quantity, selectedVariant)}
-                className="w-full py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                type="button"
+                onClick={() => onBuyNow(product, quantity, selectedVariant)}
+                className="w-full py-3.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:scale-[0.99] text-slate-950 font-black text-sm shadow-xl shadow-emerald-500/25 flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
-                <ShoppingCart className="w-4 h-4" />
-                <span>Add {quantity} to Shopping Cart</span>
+                <Zap className="w-4 h-4 fill-slate-950" />
+                <span>Instant Order & 1-Click Checkout</span>
+                <ArrowRight className="w-4 h-4" />
               </button>
 
               <button
-                onClick={() => onBuyNow(product, quantity, selectedVariant)}
-                className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm border border-slate-700 flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                type="button"
+                onClick={() => onAddToCart(product, quantity, selectedVariant)}
+                className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-750 text-white font-bold text-sm border border-slate-700/80 flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
-                <Zap className="w-4 h-4 text-emerald-400" />
-                <span>Buy Now with 1-Click Checkout</span>
+                <ShoppingCart className="w-4 h-4 text-emerald-400" />
+                <span>Add {quantity} to Shopping Cart</span>
               </button>
 
               {/* B2B Manifest & Freight Quote Lead CTA */}

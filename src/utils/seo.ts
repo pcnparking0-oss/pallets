@@ -223,6 +223,27 @@ export function computeSeoMetadata(
     };
   }
 
+  // 10. If viewing Shipping & Returns Policy
+  if (view === 'shipping-returns') {
+    return {
+      title: `Shipping & Returns Policy | European Freight Logistics & RMA | ${SITE_NAME}`,
+      description: `Complete guide to European pallet freight shipping, 24-48h dispatch from our Venlo hub, tail-lift delivery across 27 EU countries, and 14-day return & RMA policy at EuroPalletSupply B.V.`,
+      canonicalUrl: `${DOMAIN}/shipping`,
+      ogType: 'website',
+      ogImage: `${DOMAIN}/favicon.svg`,
+      keywords: [
+        'shipping and returns',
+        'pallet freight shipping europe',
+        'pallet delivery transit times',
+        'RMA returns policy',
+        'Venlo warehouse pickup',
+        'tail lift delivery',
+        'pallet liquidation shipping',
+        'EuroPalletSupply logistics'
+      ]
+    };
+  }
+
   // Default: Homepage
   return {
     title: `EuroPalletSupply.com | Europe's #1 Pallet Liquidation & Wholesale Overstock Hub`,

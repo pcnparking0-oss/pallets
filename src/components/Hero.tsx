@@ -43,18 +43,18 @@ export const Hero: React.FC<HeroProps> = ({
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-14 md:py-20 lg:py-24">
         <div className="max-w-2xl space-y-4 sm:space-y-6 text-left">
-          {/* Top Pill */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] sm:text-xs font-bold shadow-sm backdrop-blur-sm">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span className="truncate">Venlo Hub Direct • EU Liquidation Outlet</span>
+          {/* Professional Logistics Tagline */}
+          <div className="flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-emerald-400 uppercase">
+            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span>Venlo Logistics Hub · EU Liquidation & Overstock Clearance</span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.12] drop-shadow-md">
-            Europe's Premier <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500">
-              Online Liquidation & Outlet
-            </span> Shop
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-md">
+            Europe&apos;s Premier Wholesale <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400">
+              Liquidation & Pallet Clearance
+            </span> Hub
           </h1>
 
           {/* Subtitle */}

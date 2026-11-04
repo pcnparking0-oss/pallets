@@ -45,23 +45,52 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   if (!isOpen) return null;
 
   const [step, setStep] = useState<1 | 2>(1);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
-  // Form State
-  const [formData, setFormData] = useState({
-    fullName: 'David Miller',
-    email: 'david.miller@example.com',
-    phone: '+31 6 1234 5678',
-    street: 'Keizersgracht 421',
-    apartment: 'Floor 3',
-    city: 'Amsterdam',
-    postalCode: '1016 EK',
-    country: 'The Netherlands',
-    // Payment
-    paymentMethod: 'bank_transfer' as 'bank_transfer' | 'card' | 'crypto' | 'wire_transfer' | 'bunq' | 'usdt',
-    cardNumber: '4532 •••• •••• 8821',
-    cardExp: '08/28',
-    cardCvc: '849',
-    shippingSpeed: 'standard' as 'standard' | 'express'
+  // Form State: Auto-restore previous client details or start fresh with clean placeholders
+  const [formData, setFormData] = useState(() => {
+    try {
+      const saved = localStorage.getItem('epl_customer_info');
+      if (saved) {
+        const p = JSON.parse(saved);
+        return {
+          fullName: p.fullName || '',
+          companyName: p.companyName || '',
+          email: p.email || '',
+          phone: p.phone || '',
+          street: p.street || '',
+          apartment: p.apartment || '',
+          city: p.city || '',
+          postalCode: p.postalCode || '',
+          country: p.country || 'The Netherlands',
+          vatNumber: p.vatNumber || '',
+          paymentMethod: 'bank_transfer' as 'bank_transfer' | 'card' | 'crypto' | 'wire_transfer' | 'bunq' | 'usdt',
+          cardNumber: '',
+          cardExp: '',
+          cardCvc: '',
+          shippingSpeed: 'standard' as 'standard' | 'express'
+        };
+      }
+    } catch {
+      // fallback
+    }
+    return {
+      fullName: '',
+      companyName: '',
+      email: '',
+      phone: '',
+      street: '',
+      apartment: '',
+      city: '',
+      postalCode: '',
+      country: 'The Netherlands',
+      vatNumber: '',
+      paymentMethod: 'bank_transfer' as 'bank_transfer' | 'card' | 'crypto' | 'wire_transfer' | 'bunq' | 'usdt',
+      cardNumber: '',
+      cardExp: '',
+      cardCvc: '',
+      shippingSpeed: 'standard' as 'standard' | 'express'
+    };
   });
 
   const [copiedField, setCopiedField] = useState<string | null>(null);
@@ -78,6 +107,23 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     }
     setCopiedField(fieldId);
     setTimeout(() => setCopiedField(null), 2500);
+  };
+
+  const handleAutofillDemo = () => {
+    setFormData(prev => ({
+      ...prev,
+      fullName: 'Thomas Van Der Meer',
+      companyName: 'Van Der Meer Resale B.V.',
+      email: 'logistics@vandermeer-trading.nl',
+      phone: '+31 6 8291 4420',
+      street: 'Keizersgracht 421',
+      apartment: 'Suite 3B',
+      city: 'Amsterdam',
+      postalCode: '1016 EK',
+      country: 'The Netherlands',
+      vatNumber: 'NL859201948B01'
+    }));
+    setValidationError(null);
   };
 
   const subtotalEur = cartItems.reduce(
@@ -107,13 +153,52 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const handleFieldChange = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    if (validationError) setValidationError(null);
   };
 
   const handleProceedToPayment = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.fullName || !formData.email || !formData.street || !formData.city || !formData.postalCode) {
-      alert('Please fill out all required address fields.');
+    if (!formData.fullName.trim()) {
+      setValidationError('Please enter your full name (or company name).');
       return;
+    }
+    if (!formData.email.trim() || !formData.email.includes('@')) {
+      setValidationError('Please enter a valid email address for order confirmation & tracking.');
+      return;
+    }
+    if (!formData.phone.trim()) {
+      setValidationError('Please enter a telephone number for courier delivery appointment.');
+      return;
+    }
+    if (!formData.street.trim()) {
+      setValidationError('Please enter your street address and building number.');
+      return;
+    }
+    if (!formData.postalCode.trim()) {
+      setValidationError('Please enter your postal / ZIP code.');
+      return;
+    }
+    if (!formData.city.trim()) {
+      setValidationError('Please enter your city.');
+      return;
+    }
+
+    setValidationError(null);
+    try {
+      localStorage.setItem('epl_customer_info', JSON.stringify({
+        fullName: formData.fullName,
+        companyName: formData.companyName,
+        email: formData.email,
+        phone: formData.phone,
+        street: formData.street,
+        apartment: formData.apartment,
+        city: formData.city,
+        postalCode: formData.postalCode,
+        country: formData.country,
+        vatNumber: formData.vatNumber
+      }));
+    } catch {
+      // storage quota or private mode
     }
     setStep(2);
   };
@@ -255,20 +340,49 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           <div className="md:col-span-7 space-y-4">
             {step === 1 ? (
               <form onSubmit={handleProceedToPayment} className="space-y-3">
-                <div className="space-y-1">
-                  <h3 className="text-sm font-bold text-white">Contact & Delivery Address</h3>
-                  <p className="text-xs text-slate-400">All orders dispatch directly from Venlo Hub (NL).</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-sm font-bold text-white">Contact & Delivery Address</h3>
+                    <p className="text-xs text-slate-400">All orders dispatch directly with insured road freight from Venlo Hub (NL).</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleAutofillDemo}
+                    className="text-[11px] font-mono text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 px-2 py-1 rounded-lg transition-colors cursor-pointer shrink-0"
+                    title="Quick autofill sample details for fast testing"
+                  >
+                    ⚡ Fast Autofill
+                  </button>
                 </div>
 
+                {validationError && (
+                  <div className="p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2 animate-in fade-in">
+                    <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                    <span>{validationError}</span>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-2 gap-2.5">
-                  <div className="col-span-2">
+                  <div className="col-span-2 sm:col-span-1">
                     <label className="text-[11px] font-bold text-slate-300 block mb-1">Full Name *</label>
                     <input
                       type="text"
                       required
+                      placeholder="e.g. Thomas Van Der Meer"
                       value={formData.fullName}
                       onChange={(e) => handleFieldChange('fullName', e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                    />
+                  </div>
+
+                  <div className="col-span-2 sm:col-span-1">
+                    <label className="text-[11px] font-bold text-slate-300 block mb-1">Company (Optional)</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Van Der Meer Trading B.V."
+                      value={formData.companyName}
+                      onChange={(e) => handleFieldChange('companyName', e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
                     />
                   </div>
 
@@ -277,54 +391,57 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <input
                       type="email"
                       required
+                      placeholder="name@company.com"
                       value={formData.email}
                       onChange={(e) => handleFieldChange('email', e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
                     />
                   </div>
 
                   <div>
-                    <label className="text-[11px] font-bold text-slate-300 block mb-1">Phone Number *</label>
+                    <label className="text-[11px] font-bold text-slate-300 block mb-1">Phone Number (For Delivery) *</label>
                     <input
                       type="tel"
                       required
+                      placeholder="+31 6 1234 5678"
                       value={formData.phone}
                       onChange={(e) => handleFieldChange('phone', e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
                     />
                   </div>
 
                   <div className="col-span-2">
-                    <label className="text-[11px] font-bold text-slate-300 block mb-1">Street Address *</label>
+                    <label className="text-[11px] font-bold text-slate-300 block mb-1">Street Address & House Number *</label>
                     <input
                       type="text"
                       required
                       value={formData.street}
                       onChange={(e) => handleFieldChange('street', e.target.value)}
-                      placeholder="Street name and house number"
-                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                      placeholder="e.g. Keizersgracht 421 or Industrial Park 14"
+                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
                     />
                   </div>
 
                   <div>
-                    <label className="text-[11px] font-bold text-slate-300 block mb-1">Apartment / Suite</label>
+                    <label className="text-[11px] font-bold text-slate-300 block mb-1">Apartment / Bay (Optional)</label>
                     <input
                       type="text"
                       value={formData.apartment}
                       onChange={(e) => handleFieldChange('apartment', e.target.value)}
-                      placeholder="Optional"
-                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                      placeholder="Suite 3B / Loading Dock"
+                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
                     />
                   </div>
 
                   <div>
-                    <label className="text-[11px] font-bold text-slate-300 block mb-1">Postal Code *</label>
+                    <label className="text-[11px] font-bold text-slate-300 block mb-1">Postal / ZIP Code *</label>
                     <input
                       type="text"
                       required
+                      placeholder="e.g. 1016 EK"
                       value={formData.postalCode}
                       onChange={(e) => handleFieldChange('postalCode', e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
                     />
                   </div>
 
@@ -333,39 +450,46 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <input
                       type="text"
                       required
+                      placeholder="e.g. Amsterdam or Berlin"
                       value={formData.city}
                       onChange={(e) => handleFieldChange('city', e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
                     />
                   </div>
 
                   <div>
-                    <label className="text-[11px] font-bold text-slate-300 block mb-1">Country *</label>
+                    <label className="text-[11px] font-bold text-slate-300 block mb-1">Destination Country *</label>
                     <select
                       value={formData.country}
                       onChange={(e) => handleFieldChange('country', e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 cursor-pointer"
                     >
-                      <option value="The Netherlands">The Netherlands</option>
-                      <option value="Germany">Germany</option>
-                      <option value="Belgium">Belgium</option>
-                      <option value="France">France</option>
-                      <option value="Austria">Austria</option>
-                      <option value="Italy">Italy</option>
-                      <option value="Spain">Spain</option>
-                      <option value="Poland">Poland</option>
-                      <option value="Sweden">Sweden</option>
-                      <option value="United Kingdom">United Kingdom</option>
+                      <option value="The Netherlands">The Netherlands 🇳🇱</option>
+                      <option value="Germany">Germany 🇩🇪</option>
+                      <option value="Belgium">Belgium 🇧🇪</option>
+                      <option value="France">France 🇫🇷</option>
+                      <option value="Austria">Austria 🇦🇹</option>
+                      <option value="Italy">Italy 🇮🇹</option>
+                      <option value="Spain">Spain 🇪🇸</option>
+                      <option value="Poland">Poland 🇵🇱</option>
+                      <option value="Sweden">Sweden 🇸🇪</option>
+                      <option value="Denmark">Denmark 🇩🇰</option>
+                      <option value="Ireland">Ireland 🇮🇪</option>
+                      <option value="United Kingdom">United Kingdom 🇬🇧</option>
                     </select>
                   </div>
                 </div>
 
-                <div className="pt-3">
+                <div className="pt-2 flex items-center justify-between text-[11px] text-slate-400">
+                  <span>🔒 Details are encrypted and saved securely for your order.</span>
+                </div>
+
+                <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full py-3 px-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-lg flex items-center justify-center gap-2 transition-colors"
+                    className="w-full py-3.5 px-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
                   >
-                    <span>Continue to Delivery & Payment</span>
+                    <span>Proceed to Delivery & Payment</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -480,7 +604,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       <div className="bg-slate-900 border border-slate-800 rounded-lg p-3 space-y-2 text-xs">
                         <div className="flex items-center justify-between">
                           <span className="text-[11px] text-slate-400">Beneficiary:</span>
-                          <span className="font-semibold text-white">EuroPalletLiquidation B.V.</span>
+                          <span className="font-semibold text-white">EuroPalletSupply B.V.</span>
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-[11px] text-slate-400">IBAN:</span>
@@ -501,7 +625,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                           <span className="text-slate-300">bunq B.V. (Amsterdam, Netherlands)</span>
                         </div>
                         <div className="flex items-center justify-between border-t border-slate-800 pt-1.5">
-                          <span className="text-[11px] text-slate-400">Reference:</span>
+                          <span className="text-[11px] text-slate-400">Payment Reference:</span>
                           <span className="font-mono text-amber-300 font-bold">EPL-VENLO-LOTS</span>
                         </div>
                       </div>
@@ -511,31 +635,37 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   {formData.paymentMethod === 'card' && (
                     <div className="bg-slate-950 border border-slate-800 p-3.5 rounded-xl space-y-2.5">
                       <div>
-                        <label className="text-[11px] text-slate-400 block mb-1">Card Number</label>
+                        <label className="text-[11px] text-slate-400 block mb-1">Card Number *</label>
                         <input
                           type="text"
+                          required
+                          placeholder="4532 •••• •••• 8821"
                           value={formData.cardNumber}
                           onChange={(e) => handleFieldChange('cardNumber', e.target.value)}
-                          className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white font-mono"
+                          className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-500 font-mono focus:outline-none focus:border-emerald-500"
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-2">
                         <div>
-                          <label className="text-[11px] text-slate-400 block mb-1">Expires</label>
+                          <label className="text-[11px] text-slate-400 block mb-1">Expires (MM/YY) *</label>
                           <input
                             type="text"
+                            required
+                            placeholder="MM/YY"
                             value={formData.cardExp}
                             onChange={(e) => handleFieldChange('cardExp', e.target.value)}
-                            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white font-mono"
+                            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-500 font-mono focus:outline-none focus:border-emerald-500"
                           />
                         </div>
                         <div>
-                          <label className="text-[11px] text-slate-400 block mb-1">CVC</label>
+                          <label className="text-[11px] text-slate-400 block mb-1">CVC / CVV *</label>
                           <input
                             type="text"
+                            required
+                            placeholder="3 digits"
                             value={formData.cardCvc}
                             onChange={(e) => handleFieldChange('cardCvc', e.target.value)}
-                            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white font-mono"
+                            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-500 font-mono focus:outline-none focus:border-emerald-500"
                           />
                         </div>
                       </div>
@@ -566,7 +696,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       <div className="bg-slate-900 border border-slate-800 rounded-lg p-3 space-y-2 text-xs">
                         <div className="flex items-center justify-between">
                           <span className="text-[11px] text-slate-400">Beneficiary:</span>
-                          <span className="font-semibold text-white">EuroPalletLiquidation B.V.</span>
+                          <span className="font-semibold text-white">EuroPalletSupply B.V.</span>
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-[11px] text-slate-400">IBAN:</span>
