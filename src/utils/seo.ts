@@ -187,6 +187,42 @@ export function computeSeoMetadata(
     };
   }
 
+  // 7. If viewing FAQs
+  if (view === 'faq') {
+    return {
+      title: `Frequently Asked Questions (FAQ) | Pallet Liquidation & Freight | ${SITE_NAME}`,
+      description: 'Find answers on European pallet liquidation condition tiers, itemized manifests, 24-48h EU road freight dispatch, tail-lift delivery, zero-rated intra-EU VAT, and our 14-day return guarantee.',
+      canonicalUrl: `${DOMAIN}/faq`,
+      ogType: 'website',
+      ogImage: `${DOMAIN}/favicon.svg`,
+      keywords: ['liquidation FAQ', 'pallet shipping FAQ', 'Venlo warehouse logistics', 'EU VAT reverse charge', 'pallet inspection guide']
+    };
+  }
+
+  // 8. If viewing Terms & Conditions
+  if (view === 'terms') {
+    return {
+      title: `Terms & Conditions of Sale | Commercial Agreement | ${SITE_NAME}`,
+      description: `Official purchasing terms and conditions for EuroPalletSupply B.V. (Trade Port Europe, Venlo, NL - KvK 89234190). Covers order processing, 14-day warranty, freight transit, and Dutch governing law.`,
+      canonicalUrl: `${DOMAIN}/terms`,
+      ogType: 'website',
+      ogImage: `${DOMAIN}/favicon.svg`,
+      keywords: ['terms and conditions', 'EuroPalletSupply legal', 'pallet sales agreement', 'Venlo B2B terms']
+    };
+  }
+
+  // 9. If viewing Privacy Policy
+  if (view === 'privacy') {
+    return {
+      title: `Privacy Policy & EU GDPR Compliance | ${SITE_NAME}`,
+      description: `Data protection and privacy policy for EuroPalletSupply B.V. Compliant with EU GDPR (Regulation 2016/679) and Dutch UAVG. Learn how your order and freight delivery data is securely processed.`,
+      canonicalUrl: `${DOMAIN}/privacy`,
+      ogType: 'website',
+      ogImage: `${DOMAIN}/favicon.svg`,
+      keywords: ['privacy policy', 'GDPR compliance', 'EuroPalletSupply data protection', 'Dutch privacy standards']
+    };
+  }
+
   // Default: Homepage
   return {
     title: `EuroPalletSupply.com | Europe's #1 Pallet Liquidation & Wholesale Overstock Hub`,

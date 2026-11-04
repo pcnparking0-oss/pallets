@@ -9,7 +9,10 @@ import {
   BookOpen, 
   Package, 
   Heart, 
-  Truck 
+  Truck,
+  HelpCircle,
+  FileText,
+  ShieldCheck
 } from 'lucide-react';
 import { Currency, PageView } from '../types';
 import { CATEGORIES } from '../data/categories';
@@ -282,26 +285,70 @@ export const MobileMenuDrawer: React.FC<MobileMenuDrawerProps> = ({
                 </div>
               </a>
 
-              {/* Keywords Index */}
+              {/* FAQs */}
               <a
-                id="drawer-nav-keywords"
-                href="/keywords"
+                id="drawer-nav-faq"
+                href="/faq"
                 onClick={(e) => {
                   e.preventDefault();
-                  onNavigateView('keywords');
+                  onNavigateView('faq');
                   onClose();
                 }}
                 className={`w-full p-3 rounded-xl text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${
-                  currentView === 'keywords'
+                  currentView === 'faq'
                     ? 'bg-emerald-500 text-slate-950 shadow-sm'
                     : 'bg-slate-900/60 text-slate-200 hover:bg-slate-800 border border-slate-850'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
-                  <Package className="w-4 h-4 text-emerald-400" />
-                  <span>Keywords Index</span>
+                  <HelpCircle className="w-4 h-4 text-emerald-400" />
+                  <span>{mockTranslate('faq', language)}</span>
                 </div>
-                <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded font-mono">200+ Keys</span>
+                <span className="text-[10px] text-slate-400">Help & Info</span>
+              </a>
+
+              {/* Terms & Conditions */}
+              <a
+                id="drawer-nav-terms"
+                href="/terms"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigateView('terms');
+                  onClose();
+                }}
+                className={`w-full p-3 rounded-xl text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${
+                  currentView === 'terms'
+                    ? 'bg-emerald-500 text-slate-950 shadow-sm'
+                    : 'bg-slate-900/60 text-slate-200 hover:bg-slate-800 border border-slate-850'
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <FileText className="w-4 h-4 text-emerald-400" />
+                  <span>{mockTranslate('terms', language)}</span>
+                </div>
+                <span className="text-[10px] text-slate-400">Legal</span>
+              </a>
+
+              {/* Privacy Policy */}
+              <a
+                id="drawer-nav-privacy"
+                href="/privacy"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigateView('privacy');
+                  onClose();
+                }}
+                className={`w-full p-3 rounded-xl text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${
+                  currentView === 'privacy'
+                    ? 'bg-emerald-500 text-slate-950 shadow-sm'
+                    : 'bg-slate-900/60 text-slate-200 hover:bg-slate-800 border border-slate-850'
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                  <span>{mockTranslate('privacy', language)}</span>
+                </div>
+                <span className="text-[10px] text-slate-400">GDPR</span>
               </a>
 
               {/* Track Order */}

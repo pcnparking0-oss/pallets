@@ -358,6 +358,42 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a
+                  href="/faq"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigateView?.('faq');
+                  }}
+                  className="hover:text-emerald-400 transition-colors block"
+                >
+                  Frequently Asked Questions (FAQ)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/terms"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigateView?.('terms');
+                  }}
+                  className="hover:text-emerald-400 transition-colors block"
+                >
+                  Terms & Conditions
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/privacy"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigateView?.('privacy');
+                  }}
+                  className="hover:text-emerald-400 transition-colors block"
+                >
+                  Privacy Policy (GDPR)
+                </a>
+              </li>
+              <li>
+                <a
                   href="/keywords"
                   onClick={(e) => {
                     e.preventDefault();
@@ -464,10 +500,16 @@ export const Footer: React.FC<FooterProps> = ({
           <p>
             © 2026 EuroPalletSupply B.V. All rights reserved. Trade Port Europe, Venlo, Netherlands. Email: info@europalletsupply.com
           </p>
-          <div className="flex items-center gap-3 text-slate-500">
+          <div className="flex flex-wrap items-center gap-3 text-slate-500">
             <a href="/about" onClick={(e) => { e.preventDefault(); onNavigateView?.('about'); }} className="hover:text-slate-300">About</a>
             <span>•</span>
             <a href="/contact" onClick={(e) => { e.preventDefault(); onNavigateView?.('contact'); }} className="hover:text-slate-300">Contact</a>
+            <span>•</span>
+            <a href="/faq" onClick={(e) => { e.preventDefault(); onNavigateView?.('faq'); }} className="hover:text-slate-300">FAQs</a>
+            <span>•</span>
+            <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateView?.('terms'); }} className="hover:text-slate-300">Terms & Conditions</a>
+            <span>•</span>
+            <a href="/privacy" onClick={(e) => { e.preventDefault(); onNavigateView?.('privacy'); }} className="hover:text-slate-300">Privacy Policy</a>
             <span>•</span>
             <a href="/keywords" onClick={(e) => { e.preventDefault(); onNavigateView?.('keywords'); }} className="hover:text-slate-300">Keywords Directory</a>
           </div>

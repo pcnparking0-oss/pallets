@@ -29,6 +29,9 @@ export interface Translations {
   about: string;
   contact: string;
   blog: string;
+  terms: string;
+  privacy: string;
+  faq: string;
   myCart: string;
   wishlist: string;
   selectLanguage: string;
@@ -71,6 +74,9 @@ export const DICTIONARY: Record<Language, Translations> = {
     about: 'About',
     contact: 'Contact',
     blog: 'Blog',
+    terms: 'Terms & Conditions',
+    privacy: 'Privacy Policy',
+    faq: 'FAQs',
     myCart: 'My Cart',
     wishlist: 'Wishlist',
     selectLanguage: 'Select Language',
@@ -109,6 +115,9 @@ export const DICTIONARY: Record<Language, Translations> = {
     about: 'Über uns',
     contact: 'Kontakt',
     blog: 'Ratgeber',
+    terms: 'AGB',
+    privacy: 'Datenschutz',
+    faq: 'FAQs',
     myCart: 'Warenkorb',
     wishlist: 'Merkliste',
     selectLanguage: 'Sprache wählen',
@@ -147,6 +156,9 @@ export const DICTIONARY: Record<Language, Translations> = {
     about: 'À propos',
     contact: 'Contact',
     blog: 'Conseils & Blog',
+    terms: 'Conditions Générales',
+    privacy: 'Confidentialité',
+    faq: 'FAQs',
     myCart: 'Mon Panier',
     wishlist: 'Favoris',
     selectLanguage: 'Choisir la langue',

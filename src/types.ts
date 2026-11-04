@@ -113,7 +113,7 @@ export interface ShopOrder {
   estimatedDelivery: string;
 }
 
-export type PageView = 'home' | 'shop' | 'about' | 'contact' | 'blog' | 'keywords';
+export type PageView = 'home' | 'shop' | 'about' | 'contact' | 'blog' | 'keywords' | 'terms' | 'privacy' | 'faq';
 
 export interface BlogPost {
   id: string;

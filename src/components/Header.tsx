@@ -16,7 +16,9 @@ import {
   Home,
   Info,
   Mail,
-  BookOpen
+  BookOpen,
+  HelpCircle,
+  FileText
 } from 'lucide-react';
 import { Currency, Product, CartItem, PageView } from '../types';
 import { CATEGORIES } from '../data/categories';
@@ -358,22 +360,58 @@ export const Header: React.FC<HeaderProps> = ({
               <span>{mockTranslate('blog', language)}</span>
             </a>
 
-            {/* Keywords Directory */}
+            {/* FAQs */}
             <a
-              id="nav-menu-keywords"
-              href="/keywords"
+              id="nav-menu-faq"
+              href="/faq"
               onClick={(e) => {
                 e.preventDefault();
-                onNavigateView('keywords');
+                onNavigateView('faq');
               }}
               className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer ${
-                currentView === 'keywords'
+                currentView === 'faq'
                   ? 'bg-emerald-500 text-slate-950 shadow-sm'
                   : 'bg-slate-900 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700'
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Keywords Index</span>
+              <HelpCircle className="w-3.5 h-3.5" />
+              <span>{mockTranslate('faq', language)}</span>
+            </a>
+
+            {/* Terms & Conditions */}
+            <a
+              id="nav-menu-terms"
+              href="/terms"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigateView('terms');
+              }}
+              className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer ${
+                currentView === 'terms'
+                  ? 'bg-emerald-500 text-slate-950 shadow-sm'
+                  : 'bg-slate-900 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700'
+              }`}
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>{mockTranslate('terms', language)}</span>
+            </a>
+
+            {/* Privacy Policy */}
+            <a
+              id="nav-menu-privacy"
+              href="/privacy"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigateView('privacy');
+              }}
+              className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer ${
+                currentView === 'privacy'
+                  ? 'bg-emerald-500 text-slate-950 shadow-sm'
+                  : 'bg-slate-900 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700'
+              }`}
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>{mockTranslate('privacy', language)}</span>
             </a>
           </nav>
         </div>

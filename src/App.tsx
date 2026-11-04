@@ -29,6 +29,9 @@ import { computeSeoMetadata, applySeoMetadata } from './utils/seo';
 import { KeywordsDirectoryView } from './components/KeywordsDirectoryView';
 import { LeadInquiryModal } from './components/LeadInquiryModal';
 import { QuickLeadBadge } from './components/QuickLeadBadge';
+import { TermsView } from './components/TermsView';
+import { PrivacyPolicyView } from './components/PrivacyPolicyView';
+import { FAQView } from './components/FAQView';
 
 export default function App() {
   // Navigation & View
@@ -87,6 +90,15 @@ export default function App() {
       } else if (cleanPath === '/keywords' || cleanPath === '/keyword-index') {
         setCurrentView('keywords');
         setIsDetailModalOpen(false);
+      } else if (cleanPath === '/terms' || cleanPath === '/terms-and-conditions') {
+        setCurrentView('terms');
+        setIsDetailModalOpen(false);
+      } else if (cleanPath === '/privacy' || cleanPath === '/privacy-policy') {
+        setCurrentView('privacy');
+        setIsDetailModalOpen(false);
+      } else if (cleanPath === '/faq' || cleanPath === '/faqs') {
+        setCurrentView('faq');
+        setIsDetailModalOpen(false);
       }
     };
 
@@ -127,6 +139,9 @@ export default function App() {
       else if (view === 'contact') targetUrl = '/contact';
       else if (view === 'blog') targetUrl = '/blog';
       else if (view === 'keywords') targetUrl = '/keywords';
+      else if (view === 'terms') targetUrl = '/terms';
+      else if (view === 'privacy') targetUrl = '/privacy';
+      else if (view === 'faq') targetUrl = '/faq';
 
 
       if (window.location.pathname !== targetUrl) {
@@ -524,6 +539,29 @@ export default function App() {
           <KeywordsDirectoryView
             onNavigateView={handleNavigateView}
             onSelectCategory={handleSelectCategory}
+          />
+        )}
+
+        {currentView === 'terms' && (
+          <TermsView
+            onNavigateShop={() => handleNavigateView('shop')}
+            onNavigateContact={() => handleNavigateView('contact')}
+          />
+        )}
+
+        {currentView === 'privacy' && (
+          <PrivacyPolicyView
+            onNavigateShop={() => handleNavigateView('shop')}
+            onNavigateContact={() => handleNavigateView('contact')}
+          />
+        )}
+
+        {currentView === 'faq' && (
+          <FAQView
+            language={language}
+            onNavigateShop={() => handleNavigateView('shop')}
+            onNavigateContact={() => handleNavigateView('contact')}
+            onOpenTrackOrder={() => setIsTrackOrderOpen(true)}
           />
         )}
       </main>
