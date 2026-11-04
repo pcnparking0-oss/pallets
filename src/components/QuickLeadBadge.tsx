@@ -64,13 +64,13 @@ export const QuickLeadBadge: React.FC<QuickLeadBadgeProps> = ({ onOpenQuoteModal
             </a>
 
             <a
-              href="tel:+31778200419"
+              href="tel:+3197010257455"
               className="w-full py-2 px-3 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700/80 text-white font-semibold text-xs flex items-center gap-2.5 transition-colors"
             >
               <Phone className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
               <div className="text-left">
                 <span className="block text-[10px] text-slate-400">Freight Dispatch Phone:</span>
-                <span className="font-mono text-white">+31 (0)77 820 0419</span>
+                <span className="font-mono text-white">+31 970 1025 7455</span>
               </div>
             </a>
           </div>

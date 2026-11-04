@@ -160,7 +160,7 @@ export function computeSeoMetadata(
   if (view === 'contact') {
     return {
       title: `Contact Logistics Desk & Freight Dispatch (${SITE_EMAIL}) | ${SITE_NAME}`,
-      description: `Get in touch with our freight logistics desk at Trade Port Europe, Venlo, NL. Direct email: ${SITE_EMAIL}, phone: +31 (0)77 820 0419, warehouse visit appointments, and wholesale container bookings.`,
+      description: `Get in touch with our freight logistics desk at Trade Port Europe, Venlo, NL. Direct email: ${SITE_EMAIL}, phone: +31 970 1025 7455, warehouse visit appointments, and wholesale container bookings.`,
       canonicalUrl: `${DOMAIN}/contact`,
       ogType: 'website',
       ogImage: `${DOMAIN}/favicon.svg`,

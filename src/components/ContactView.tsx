@@ -310,7 +310,9 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBackToShop, onNaviga
             </p>
             <div className="text-xs text-slate-300 flex items-center gap-1.5 pt-1">
               <Phone className="w-3.5 h-3.5 text-emerald-400" />
-              <span>+31 (0)77 820 0419</span>
+              <a href="tel:+3197010257455" className="hover:text-emerald-400 font-mono transition-colors">
+                +31 970 1025 7455
+              </a>
             </div>
           </div>
         </div>

@@ -201,7 +201,7 @@ export async function sendContactEmails(data: ContactFormData) {
           </div>
           <div class="footer">
             EuroPalletSupply B.V. • Trade Port Europe, Voltastraat 12, 5928 PCA Venlo, Netherlands<br>
-            Direct Help Desk: <a href="mailto:info@europalletsupply.com" style="color: #10b981;">info@europalletsupply.com</a> • +31 (0)77 820 0419
+            Direct Help Desk: <a href="mailto:info@europalletsupply.com" style="color: #10b981;">info@europalletsupply.com</a> • +31 970 1025 7455
           </div>
         </div>
       </body>

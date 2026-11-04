@@ -185,7 +185,7 @@ export const HomeFAQSection: React.FC<HomeFAQSectionProps> = ({
                 {mockTranslate('haveQuestions', language)}
               </h4>
               <p className="text-[11px] text-slate-400">
-                Direct phone desk (+31 77 396 9012) & warehouse dock appointments in Venlo.
+                Direct phone desk (+31 970 1025 7455) & warehouse dock appointments in Venlo.
               </p>
             </div>
           </div>

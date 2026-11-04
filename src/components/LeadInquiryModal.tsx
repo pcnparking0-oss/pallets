@@ -190,8 +190,8 @@ Submitted At: ${new Date().toISOString()}
                 </div>
                 <div className="flex items-center justify-between text-slate-400 text-[11px]">
                   <span>Logistics Phone:</span>
-                  <a href="tel:+31778200419" className="text-white hover:text-emerald-400 font-mono">
-                    +31 (0)77 820 0419
+                  <a href="tel:+3197010257455" className="text-white hover:text-emerald-400 font-mono">
+                    +31 970 1025 7455
                   </a>
                 </div>
               </div>
