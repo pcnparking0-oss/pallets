@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   BookOpen, 
   Calendar, 
@@ -16,12 +16,50 @@ import { BLOG_POSTS } from '../data/blogPosts';
 import { BlogPost } from '../types';
 
 interface BlogViewProps {
-  onNavigateShop: () => void;
+  onNavigateShop?: () => void;
+  onExploreShop?: () => void;
+  onSelectCategory?: (categoryId: string) => void;
+  activeBlogSlug?: string | null;
+  onSelectPost?: (post: BlogPost) => void;
+  onClosePost?: () => void;
 }
 
-export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
+export const BlogView: React.FC<BlogViewProps> = ({ 
+  onNavigateShop, 
+  onExploreShop,
+  onSelectCategory,
+  activeBlogSlug,
+  onSelectPost,
+  onClosePost 
+}) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+
+  // Sync internal selectedPost with activeBlogSlug from URL
+  useEffect(() => {
+    if (activeBlogSlug) {
+      const found = BLOG_POSTS.find(p => p.slug === activeBlogSlug || p.id === activeBlogSlug);
+      if (found) {
+        setSelectedPost(found);
+      }
+    } else {
+      setSelectedPost(null);
+    }
+  }, [activeBlogSlug]);
+
+  const handleOpenPost = (post: BlogPost) => {
+    setSelectedPost(post);
+    if (onSelectPost) {
+      onSelectPost(post);
+    }
+  };
+
+  const handleClosePost = () => {
+    setSelectedPost(null);
+    if (onClosePost) {
+      onClosePost();
+    }
+  };
 
   const categories = ['All', 'Reselling Strategy', 'Logistics & Quality', 'Market Trends', 'Payment & Compliance'];
 
@@ -30,6 +68,12 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
     : BLOG_POSTS.filter(p => p.category === selectedCategory);
 
   const featuredPost = BLOG_POSTS.find(p => p.featured) || BLOG_POSTS[0];
+
+  const handleGoToShop = () => {
+    handleClosePost();
+    if (onNavigateShop) onNavigateShop();
+    else if (onExploreShop) onExploreShop();
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 py-8 sm:py-12">
@@ -90,7 +134,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
                     href={`/blog/${featuredPost.slug}`}
                     onClick={(e) => {
                       e.preventDefault();
-                      setSelectedPost(featuredPost);
+                      handleOpenPost(featuredPost);
                     }}
                     className="hover:underline focus:outline-none"
                   >
@@ -113,7 +157,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
                     href={`/blog/${featuredPost.slug}`}
                     onClick={(e) => {
                       e.preventDefault();
-                      setSelectedPost(featuredPost);
+                      handleOpenPost(featuredPost);
                     }}
                     className="text-emerald-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform cursor-pointer"
                   >
@@ -161,11 +205,8 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
 
               <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-3 text-[11px] text-slate-400">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3 text-slate-500" />
-                      {post.publishedAt}
-                    </span>
+                  <div className="flex items-center gap-2 text-[11px] text-slate-400">
+                    <span>{post.publishedAt}</span>
                     <span>•</span>
                     <span className="flex items-center gap-1">
                       <Clock className="w-3 h-3 text-emerald-400" />
@@ -173,12 +214,12 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
                     </span>
                   </div>
 
-                  <h3 className="text-base font-bold text-white group-hover:text-emerald-300 transition-colors leading-snug">
+                  <h3 className="text-base font-bold text-white group-hover:text-emerald-400 transition-colors leading-snug">
                     <a
                       href={`/blog/${post.slug}`}
                       onClick={(e) => {
                         e.preventDefault();
-                        setSelectedPost(post);
+                        handleOpenPost(post);
                       }}
                       className="hover:underline focus:outline-none"
                     >
@@ -186,7 +227,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
                     </a>
                   </h3>
 
-                  <p className="text-xs text-slate-400 line-clamp-3 leading-relaxed">
+                  <p className="text-xs text-slate-300 line-clamp-2">
                     {post.excerpt}
                   </p>
                 </div>
@@ -197,7 +238,7 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
                     href={`/blog/${post.slug}`}
                     onClick={(e) => {
                       e.preventDefault();
-                      setSelectedPost(post);
+                      handleOpenPost(post);
                     }}
                     className="text-emerald-400 font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform cursor-pointer"
                   >
@@ -214,8 +255,9 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
           <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
             <div className="bg-slate-900 border border-slate-700 max-w-3xl w-full max-h-[90vh] overflow-y-auto rounded-3xl p-6 sm:p-8 shadow-2xl relative space-y-6">
               <button
-                onClick={() => setSelectedPost(null)}
-                className="absolute top-5 right-5 p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
+                onClick={handleClosePost}
+                className="absolute top-5 right-5 p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer"
+                aria-label="Close article"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -262,11 +304,8 @@ export const BlogView: React.FC<BlogViewProps> = ({ onNavigateShop }) => {
                   <span className="text-[11px] text-slate-400">Browse live tested pallets ready for dispatch in Venlo.</span>
                 </div>
                 <button
-                  onClick={() => {
-                    setSelectedPost(null);
-                    onNavigateShop();
-                  }}
-                  className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shrink-0"
+                  onClick={handleGoToShop}
+                  className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shrink-0 cursor-pointer"
                 >
                   Explore Pallet Deals
                 </button>

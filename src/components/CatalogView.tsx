@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Filter, 
   SlidersHorizontal, 
@@ -27,6 +27,7 @@ interface CatalogViewProps {
   onAddToCart: (product: Product) => void;
   onViewDetails: (product: Product) => void;
   onBuyNow?: (product: Product) => void;
+  initialSearchQuery?: string;
 }
 
 export const CatalogView: React.FC<CatalogViewProps> = ({
@@ -37,10 +38,17 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
   onToggleWishlist,
   onAddToCart,
   onViewDetails,
-  onBuyNow
+  onBuyNow,
+  initialSearchQuery = ''
 }) => {
   // Filter states
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
+
+  useEffect(() => {
+    if (initialSearchQuery !== undefined) {
+      setSearchQuery(initialSearchQuery);
+    }
+  }, [initialSearchQuery]);
   const [selectedCondition, setSelectedCondition] = useState<string>('all');
   const [selectedPriceRange, setSelectedPriceRange] = useState<string>('all');
   const [selectedBrand, setSelectedBrand] = useState<string>('all');

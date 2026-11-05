@@ -59,13 +59,11 @@ export const ShopDropdownMenu: React.FC<ShopDropdownMenuProps> = ({
 
   const handleCategoryClick = (categoryId: string) => {
     onSelectCategory(categoryId);
-    onNavigateCatalog();
     setIsOpen(false);
   };
 
   const handleAllDealsClick = () => {
     onSelectCategory('all');
-    onNavigateCatalog();
     setIsOpen(false);
   };
 

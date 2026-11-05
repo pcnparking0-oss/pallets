@@ -18,6 +18,7 @@ import { Currency, PageView } from '../types';
 import { CATEGORIES } from '../data/categories';
 import { Language, LANGUAGES, mockTranslate } from '../utils/translations';
 import { SiteLogo } from './SiteLogo';
+import { LanguageDropdownFolder } from './LanguageDropdownFolder';
 
 interface MobileMenuDrawerProps {
   isOpen: boolean;
@@ -110,29 +111,24 @@ export const MobileMenuDrawer: React.FC<MobileMenuDrawerProps> = ({
           
           {/* Quick Preferences: Language & Currency */}
           <div className="bg-slate-900/80 rounded-2xl p-3 border border-slate-800 space-y-3">
-            {/* Language Switcher */}
+            {/* Language Switcher - 24 European Languages Dropdown Folder */}
             <div>
-              <span className="text-slate-400 font-bold uppercase tracking-wider block text-[10px] mb-1.5">
-                {mockTranslate('selectLanguage', language)}
-              </span>
-              <div className="grid grid-cols-3 gap-1.5">
-                {LANGUAGES.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => {
-                      if (onSelectLanguage) onSelectLanguage(lang.code);
-                    }}
-                    className={`py-2 px-1 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer border ${
-                      language === lang.code
-                        ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-sm'
-                        : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-750'
-                    }`}
-                  >
-                    <span className="text-sm leading-none">{lang.flag}</span>
-                    <span>{lang.label.slice(0, 3)}</span>
-                  </button>
-                ))}
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-slate-400 font-bold uppercase tracking-wider block text-[10px]">
+                  {mockTranslate('selectLanguage', language)} (24 EU)
+                </span>
+                <span className="text-[10px] text-emerald-400 font-mono font-bold">
+                  24 European Languages
+                </span>
               </div>
+              <LanguageDropdownFolder
+                language={language}
+                onSelectLanguage={(lang) => {
+                  if (onSelectLanguage) onSelectLanguage(lang);
+                }}
+                isMobile={true}
+                onCloseMobileDrawer={onClose}
+              />
             </div>
 
             {/* Currency Switcher */}

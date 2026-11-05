@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Currency, Product, CartItem, ShopOrder, ProductVariant, PageView } from './types';
+import { Currency, Product, CartItem, ShopOrder, ProductVariant, PageView, BlogPost } from './types';
 import { PRODUCTS } from './data/products';
 import { CATEGORIES } from './data/categories';
 import { Header } from './components/Header';
@@ -22,7 +22,7 @@ import { PalletDropdownMenu } from './components/PalletDropdownMenu';
 import { HomeTrustpilotReviews } from './components/HomeTrustpilotReviews';
 import { HomeBlogSection } from './components/HomeBlogSection';
 import { HomeFAQSection } from './components/HomeFAQSection';
-import { Language } from './utils/translations';
+import { Language, LANGUAGES } from './utils/translations';
 import { CheckCircle2, ShoppingBag, ArrowRight } from 'lucide-react';
 import { MobileMenuDrawer } from './components/MobileMenuDrawer';
 import { computeSeoMetadata, applySeoMetadata } from './utils/seo';
@@ -34,11 +34,14 @@ import { PrivacyPolicyView } from './components/PrivacyPolicyView';
 import { FAQView } from './components/FAQView';
 import { ShippingReturnsView } from './components/ShippingReturnsView';
 import { formatCurrency } from './utils/formatters';
+import { parseUrlToRoute, pushAppRoute, routeToUrl } from './utils/router';
 
 export default function App() {
-  // Navigation & View
+  // Navigation, Route & View State
   const [currentView, setCurrentView] = useState<PageView>('home');
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [activeBlogSlug, setActiveBlogSlug] = useState<string | null>(null);
+  const [catalogSearchQuery, setCatalogSearchQuery] = useState<string>('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Product Detail Modal State
@@ -54,126 +57,92 @@ export default function App() {
     setIsQuoteModalOpen(true);
   };
 
-  // Initialize Route from URL Path on mount
+  // Synchronize State from Browser URL on initial mount and Back/Forward buttons
   useEffect(() => {
-    const parsePath = (path: string) => {
-      const cleanPath = path.replace(/\/$/, '') || '/';
-      
-      if (cleanPath === '/' || cleanPath === '') {
-        setCurrentView('home');
-        setSelectedCategoryId(null);
-        setIsDetailModalOpen(false);
-      } else if (cleanPath === '/shop') {
-        setCurrentView('shop');
-        setSelectedCategoryId(null);
-        setIsDetailModalOpen(false);
-      } else if (cleanPath.startsWith('/shop/')) {
-        const catSlug = cleanPath.replace('/shop/', '');
-        const foundCategory = CATEGORIES.find(c => c.slug === catSlug || c.id === catSlug);
-        setCurrentView('shop');
-        setSelectedCategoryId(foundCategory ? foundCategory.id : catSlug);
-        setIsDetailModalOpen(false);
-      } else if (cleanPath.startsWith('/product/')) {
-        const prodId = cleanPath.replace('/product/', '');
-        const foundProd = PRODUCTS.find(p => p.id === prodId);
-        if (foundProd) {
-          setSelectedProduct(foundProd);
+    const syncRouteFromBrowser = () => {
+      const route = parseUrlToRoute(window.location.pathname, window.location.search);
+      setCurrentView(route.view);
+      setSelectedCategoryId(route.categoryId);
+      setActiveBlogSlug(route.blogSlug);
+      setCatalogSearchQuery(route.searchQuery);
+
+      if (route.productId) {
+        const found = PRODUCTS.find(
+          p => p.id.toLowerCase() === route.productId?.toLowerCase() ||
+               p.sku.toLowerCase() === route.productId?.toLowerCase()
+        );
+        if (found) {
+          setSelectedProduct(found);
           setIsDetailModalOpen(true);
+        } else {
+          setSelectedProduct(null);
+          setIsDetailModalOpen(false);
         }
-      } else if (cleanPath === '/about') {
-        setCurrentView('about');
-        setIsDetailModalOpen(false);
-      } else if (cleanPath === '/contact') {
-        setCurrentView('contact');
-        setIsDetailModalOpen(false);
-      } else if (cleanPath.startsWith('/blog')) {
-        setCurrentView('blog');
-        setIsDetailModalOpen(false);
-      } else if (cleanPath === '/keywords' || cleanPath === '/keyword-index') {
-        setCurrentView('keywords');
-        setIsDetailModalOpen(false);
-      } else if (cleanPath === '/terms' || cleanPath === '/terms-and-conditions') {
-        setCurrentView('terms');
-        setIsDetailModalOpen(false);
-      } else if (cleanPath === '/privacy' || cleanPath === '/privacy-policy') {
-        setCurrentView('privacy');
-        setIsDetailModalOpen(false);
-      } else if (cleanPath === '/faq' || cleanPath === '/faqs') {
-        setCurrentView('faq');
-        setIsDetailModalOpen(false);
-      } else if (cleanPath === '/shipping' || cleanPath === '/shipping-returns' || cleanPath === '/returns' || cleanPath === '/delivery') {
-        setCurrentView('shipping-returns');
+      } else {
+        setSelectedProduct(null);
         setIsDetailModalOpen(false);
       }
     };
 
+    // Hydrate route on mount
+    syncRouteFromBrowser();
 
-    parsePath(window.location.pathname);
-
+    // Listen to browser Back and Forward navigation buttons
     const handlePopState = () => {
-      parsePath(window.location.pathname);
+      syncRouteFromBrowser();
     };
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  // Update Dynamic SEO Metadata whenever route / modal changes
+  // Update Dynamic SEO Metadata whenever route, category, product, query, or blog changes
   useEffect(() => {
     const meta = computeSeoMetadata(
       currentView,
       selectedCategoryId,
       selectedProduct,
-      isDetailModalOpen
+      isDetailModalOpen,
+      catalogSearchQuery,
+      activeBlogSlug
     );
     applySeoMetadata(meta);
-  }, [currentView, selectedCategoryId, selectedProduct, isDetailModalOpen]);
+  }, [currentView, selectedCategoryId, selectedProduct, isDetailModalOpen, catalogSearchQuery, activeBlogSlug]);
 
   const handleNavigateView = useCallback((view: PageView, pushHistory = true) => {
     if (view === 'home') {
       setSelectedCategoryId(null);
+      setCatalogSearchQuery('');
     }
     setCurrentView(view);
     setIsDetailModalOpen(false);
+    setSelectedProduct(null);
+    setActiveBlogSlug(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (pushHistory) {
-      let targetUrl = '/';
-      if (view === 'shop') targetUrl = selectedCategoryId ? `/shop/${selectedCategoryId}` : '/shop';
-      else if (view === 'about') targetUrl = '/about';
-      else if (view === 'contact') targetUrl = '/contact';
-      else if (view === 'blog') targetUrl = '/blog';
-      else if (view === 'keywords') targetUrl = '/keywords';
-      else if (view === 'terms') targetUrl = '/terms';
-      else if (view === 'privacy') targetUrl = '/privacy';
-      else if (view === 'faq') targetUrl = '/faq';
-      else if (view === 'shipping-returns') targetUrl = '/shipping';
-
-
-      if (window.location.pathname !== targetUrl) {
-        window.history.pushState(null, '', targetUrl);
-      }
+      pushAppRoute({
+        view,
+        categoryId: view === 'shop' ? selectedCategoryId : null,
+        searchQuery: view === 'shop' ? catalogSearchQuery : ''
+      });
     }
-  }, [selectedCategoryId]);
+  }, [selectedCategoryId, catalogSearchQuery]);
 
   // Global Currency State (EUR / GBP)
   const [currency, setCurrency] = useState<Currency>('EUR');
 
-  // Multi-Language Switcher State (English, German, French)
+  // Multi-Language Switcher State (All 24 European Languages)
   const [language, setLanguage] = useState<Language>(() => {
     const saved = localStorage.getItem('europallet_language');
-    return (saved === 'de' || saved === 'fr' || saved === 'en') ? saved : 'en';
+    return (LANGUAGES.some(l => l.code === saved) ? saved : 'en') as Language;
   });
 
   const handleSelectLanguage = (lang: Language) => {
     setLanguage(lang);
     localStorage.setItem('europallet_language', lang);
-    const langNames: Record<Language, string> = {
-      en: 'English (UK / EU)',
-      de: 'Deutsch (DE / AT)',
-      fr: 'Français (FR / BE)'
-    };
-    showToast(`Language switched to ${langNames[lang]}`);
+    const langOption = LANGUAGES.find(l => l.code === lang);
+    showToast(`Language switched to ${langOption ? `${langOption.label} (${langOption.flag})` : lang}`);
   };
 
   // Shopping Cart State
@@ -345,43 +314,60 @@ export default function App() {
     });
   };
 
-  // View product detail
+  // View product detail: sets product and updates browser URL to /products/[id]
   const handleViewProduct = (product: Product) => {
     setSelectedProduct(product);
     setIsDetailModalOpen(true);
-    const targetUrl = `/product/${product.id}`;
-    if (window.location.pathname !== targetUrl) {
-      window.history.pushState(null, '', targetUrl);
-    }
+    pushAppRoute({ productId: product.id });
   };
 
+  // Close product detail: hides modal and restores underlying URL
   const handleCloseDetailModal = () => {
     setIsDetailModalOpen(false);
-    let targetUrl = '/';
-    if (currentView === 'shop') {
-      targetUrl = selectedCategoryId ? `/shop/${selectedCategoryId}` : '/shop';
-    } else if (currentView === 'about') targetUrl = '/about';
-    else if (currentView === 'contact') targetUrl = '/contact';
-    else if (currentView === 'blog') targetUrl = '/blog';
-    if (window.location.pathname !== targetUrl) {
-      window.history.pushState(null, '', targetUrl);
-    }
+    setSelectedProduct(null);
+    pushAppRoute({
+      view: currentView,
+      categoryId: selectedCategoryId,
+      searchQuery: catalogSearchQuery,
+      blogSlug: activeBlogSlug
+    });
   };
 
-  // Category navigation
+  // Category navigation: updates selected category and updates URL to /shop/[categorySlug]
   const handleSelectCategory = (categoryId: string) => {
-    if (categoryId === 'all') {
-      setSelectedCategoryId(null);
-    } else {
-      setSelectedCategoryId(categoryId);
-    }
     const targetCat = categoryId === 'all' ? null : categoryId;
+    setSelectedCategoryId(targetCat);
+    setCatalogSearchQuery('');
     setCurrentView('shop');
     setIsDetailModalOpen(false);
-    const targetUrl = targetCat ? `/shop/${targetCat}` : '/shop';
-    if (window.location.pathname !== targetUrl) {
-      window.history.pushState(null, '', targetUrl);
-    }
+    setSelectedProduct(null);
+    setActiveBlogSlug(null);
+
+    pushAppRoute({ view: 'shop', categoryId: targetCat, searchQuery: '' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Blog article navigation: opens specific guide with shareable /blog/[slug] URL
+  const handleSelectBlogPost = (post: BlogPost) => {
+    setActiveBlogSlug(post.slug);
+    pushAppRoute({ view: 'blog', blogSlug: post.slug });
+  };
+
+  const handleBackToAllBlogPosts = () => {
+    setActiveBlogSlug(null);
+    pushAppRoute({ view: 'blog' });
+  };
+
+  // Search submission: navigates to /shop?q=[query]
+  const handleSearchSubmit = (query: string) => {
+    setCatalogSearchQuery(query);
+    setCurrentView('shop');
+    setSelectedCategoryId(null);
+    setIsDetailModalOpen(false);
+    setSelectedProduct(null);
+    setActiveBlogSlug(null);
+
+    pushAppRoute({ view: 'shop', searchQuery: query });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -457,6 +443,10 @@ export default function App() {
           setIsMobileMenuOpen(false);
           handleNavigateView('shop');
         }}
+        onSearchQuery={(q) => {
+          setIsMobileMenuOpen(false);
+          handleSearchSubmit(q);
+        }}
         isMobileMenuOpen={isMobileMenuOpen}
         onToggleMobileMenu={() => setIsMobileMenuOpen(prev => !prev)}
         onCloseMobileMenu={() => setIsMobileMenuOpen(false)}
@@ -526,15 +516,13 @@ export default function App() {
           <CatalogView
             currency={currency}
             selectedCategoryId={selectedCategoryId}
-            onSelectCategory={(catId) => {
-              if (catId === 'all') setSelectedCategoryId(null);
-              else setSelectedCategoryId(catId);
-            }}
+            onSelectCategory={handleSelectCategory}
             wishlistIds={wishlistIds}
             onToggleWishlist={handleToggleWishlist}
             onAddToCart={(p) => handleAddToCart(p, 1)}
             onBuyNow={(p) => handleBuyNow(p, 1)}
             onViewDetails={handleViewProduct}
+            initialSearchQuery={catalogSearchQuery}
           />
         )}
 
@@ -555,6 +543,9 @@ export default function App() {
           <BlogView
             onExploreShop={() => handleNavigateView('shop')}
             onSelectCategory={handleSelectCategory}
+            activeBlogSlug={activeBlogSlug}
+            onSelectPost={handleSelectBlogPost}
+            onClosePost={handleBackToAllBlogPosts}
           />
         )}
 

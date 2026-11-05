@@ -1,5 +1,6 @@
 import { Product, PageView } from '../types';
 import { CATEGORIES } from '../data/categories';
+import { BLOG_POSTS } from '../data/blogPosts';
 import { MASTER_KEYWORDS_LIST, findKeywordTarget } from '../data/keywords';
 
 export const DOMAIN = 'https://europalletsupply.com';
@@ -170,6 +171,19 @@ export function computeSeoMetadata(
 
   // 6. If viewing Blog
   if (view === 'blog') {
+    if (blogSlug) {
+      const post = BLOG_POSTS.find(p => p.slug === blogSlug || p.id === blogSlug);
+      if (post) {
+        return {
+          title: `${post.title} | European Reseller Guide | ${SITE_NAME}`,
+          description: post.excerpt,
+          canonicalUrl: `${DOMAIN}/blog/${post.slug}`,
+          ogType: 'article',
+          ogImage: post.imageUrl || `${DOMAIN}/favicon.svg`,
+          keywords: [post.category, 'pallet liquidation guide', 'reselling guide', 'EuroPalletSupply']
+        };
+      }
+    }
     return {
       title: `Liquidation Guides, Amazon Return Pallets & Reseller ROI | ${SITE_NAME}`,
       description: 'Expert guides on how to buy Amazon liquidation pallets in Europe, manifest grading, calculating reseller ROI on eBay/Amazon, and bulk laptop/phone wholesale arbitrage.',
